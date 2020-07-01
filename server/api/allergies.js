@@ -71,7 +71,7 @@ router.post('/:id', async(req, res) => {
     if(validateAgainstSchema(body, AllergySchema)){
         try{
             // Make query to database
-            await insertNewAllergy(body);
+            const insertId = await insertNewAllergy(body);
             debug("-- Successfully inserted new allergy");
             // Upon success send response back
 
@@ -80,6 +80,7 @@ router.post('/:id', async(req, res) => {
             // successfully saved to db. If so then the client will save(cached) post instead
             // of making another request. This will minimize resources necessary for operation.
             res.status(201).send({
+                allergyId: insertId,
                 successStatus: true //This here is the idea. Send success either true or false.
             });
         } catch (err) {
