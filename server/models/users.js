@@ -49,12 +49,26 @@ async function insertNewUser(user) {
 }
 exports.insertNewUser = insertNewUser;
 
+
 /*
-    Query: Checks if email is present in users table. Checks if encrypted password matches
+    Query: Gets a user by their unique email
+    Returns: user data
+    Return Value: JSON
+ */
+async function getUserByEmail(email) {
+    const [ results ] = await mysqlPool.query(
+        "SELECT * FROM users WHERE email=?",
+        [email]
+    )
+
+    return results[0];
+}
+
+/*
+    Query: Checks if encrypted password matches
     Returns: userId and true or false if user is verified.
     Return Value: JSON Object
  */
-
 async function validateUser(email, password){
     const user = await getUserByEmail(email);
     const verifiedUser = await bcrypt.compare(password, user.password);

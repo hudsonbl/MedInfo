@@ -96,7 +96,7 @@ CREATE TABLE `allergies`(
   `userId` MEDIUMINT(4) NOT NULL,
   `allergy` VARCHAR(255) NOT NULL,
   `symptoms` VARCHAR(500) NOT NULL,
-  `medication` VARCHAR(255) NOT NULL,
+  `medication` VARCHAR(255) NULL,
   `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`allergyId`),
   FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)

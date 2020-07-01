@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const api = require('./api');
 const cors = require('cors');
-
+const {debug} = require('./lib/debug');
 const app = express();
 const port = process.env.PORT || 6000;
 
@@ -20,5 +20,5 @@ app.use('*', (req, res) => {
 });
 
 app.listen(port, function() {
-    console.log("== Server running on port: ", PORT);
+    console.log("== Server running on port: ", port);
 });

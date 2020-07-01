@@ -1,4 +1,4 @@
-version '3.7'
+version: '3.7'
 services: 
     mysql-medinfo:
         image: mysql:latest
@@ -7,7 +7,7 @@ services:
         ports: 
             - 3333:3306
         volumes:
-            - mysql-data:/var/lib/mysql
+            - mysql-medinfo:/var/lib/mysql
             - ./db-init/:/docker-entrypoint-initdb.d
         environment: 
             MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
