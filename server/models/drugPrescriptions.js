@@ -1,98 +1,102 @@
 /*
- * Chronic health issues schema and data accessor methods
+ * Drug prescription issues schema and data accessor methods
  */
 
 const mysqlPool = require('../lib/mysqlPool');
 
 /*
- *  Schemas describing fields of chronic health issue object
+ *  Schemas describing fields of prescribbeddrugs object
  */
 
-const ChronicHealthSchema = {
+const DrugPrescriptionSchema = {
     userId: {required: true},
-    condition: {required: true},
-    notes: {required: false}
+    name: {required: true},
+    startdate: {required: false},
+    enddate: {required: false},
+    symptoms: {required: false}
 };
-exports.ChronicHealthSchema = ChronicHealthSchema;
+exports.DrugPrescriptionSchema = DrugPrescriptionSchema;
 
-const ChronicHealthPatchSchema = {
+const DrugPrescriptionPatchSchema = {
+    prescriptionId: {required: true},
     userId: {required: true},
-    chronicId: {required: true},
-    condition: {required: false},
-    notes: {required: false}
+    name: {required: false},
+    startdate: {required: false},
+    enddate: {required: false},
+    symptoms: {required: false}
 };
-exports.ChronicHealthPatchSchema = ChronicHealthPatchSchema;
+exports.DrugPrescriptionPatchSchema = DrugPrescriptionPatchSchema;
 /*
  * Data accessor methods
  */
 
 /*
-    Query: Creates and inserts a new chronic health issue
-    Returns: insertId of new chronic health issue
+    Query: Creates and inserts a new prescription drug
+    Returns: insertId of new prescription drug
     Return Value: INT
  */
 
-async function insertNewChronicHealthIssue(body) {
+async function insertNewDrugPrescription(body) {
     const [ results ] = await mysqlPool.query(
-        'INSERT INTO chronichealth SET ?',
+        'INSERT INTO prescribeddrugs SET ?',
         body
     );
 
     return results.insertId;
 }
-exports.insertNewChronicHealthIssue = insertNewChronicHealthIssue;
+exports.insertNewDrugPrescription = insertNewDrugPrescription;
 
 /*
-    Query: Get all chronic health issues for a specific user
-    Returns: JSON object array of a users chronic health issues
+    Query: Get all prescription drugs for a specific user
+    Returns: JSON object array of a users presciption drugs
     Return Value: JSON Object array
  */
 
-async function getChronicHealthByUserId(userId) {
+async function getDrugPrescriptionsByUserId(userId) {
     const [ results ] = await mysqlPool.query(
-        'SELECT * FROM chronichealth WHERE userId=?',
+        'SELECT * FROM prescribeddrugs WHERE userId=?',
         [userId]
     );
     
     return results;
 }
-exports.getChronicHealthByUserId = getChronicHealthByUserId;
+exports.getDrugPrescriptionsByUserId = getDrugPrescriptionsByUserId;
 
 /*
-    Query: Update chronichealth columns
+    Query: Update prescribeddrugs columns
     Returns: number of affected rows, if its zero it means operation was invalid or nothing changed
     Return Value: INT
  */
 
-async function updateChronicHealthIssue(body) {
+async function updateDrugPrescription(body) {
     const [ results ] = await mysqlPool.query(
-        'UPDATE chronichealth SET ? WHERE chronicId=? AND userId=?',
-        [body, body.chronicId, body.userId]
+        'UPDATE prescribeddrugs SET ? WHERE prescriptionId=? AND userId=?',
+        [body, body.prescriptionId, body.userId]
     );
 
     if(results.affectedRows == 0){
-        throw new Error("No chronic by chronic Id and no affected rows");
+        throw new Error("No prescription by its drug id and no affected rows");
     }
     return results;
 }
-exports.updateChronicHealthIssue = updateChronicHealthIssue;
+exports.updateDrugPrescription = updateDrugPrescription;
 
 /*
-    Query: Deletes a chronic health issue row from chronichealth table
+    Query: Deletes a prescription drug row from prescribeddrugs table
     Returns: affected rows, if its zero it means operation was invalid or nothing changed
     Return Value: INT
  */
 
-async function deleteChronicHealthIssue(ids) {
+async function deleteDrugPrescription(ids) {
     const [ results ] = await mysqlPool.query(
-        'DELETE FROM chronichealth WHERE chronicId=? AND userId=?',
-        [ids.chronicId, ids.userId]
+        'DELETE FROM prescribeddrugs WHERE prescriptionId=? AND userId=?',
+        [ids.prescriptionId, ids.userId]
     );
 
     if(results.affectedRows == 0) {
-        throw new Error("No chronic health issue was deleted");
+        throw new Error("No prescription drug was deleted");
     }
 
     return results.affectedRows;
 }
-exports.deleteChronicHealthIssue = deleteChronicHealthIssue;
+exports.deleteDrugPrescription = deleteDrugPrescription;

@@ -12,7 +12,7 @@ const {
     deleteDrugPrescription,
     DrugPrescriptionSchema,
     DrugPrescriptionPatchSchema
-} = require('../models/drugPrescription');
+} = require('../models/drugPrescriptions');
 const { debug } = require('../lib/debug');
 
 // =========================================
@@ -53,26 +53,26 @@ router.get('/:id', async(req, res) => {
 })
 
 // =========================================
-// ==========  POST doctor visit ===========
+// ========  POST drug prescription ========
 // =========================================
 
 /*
-    Resource: POST /doctor-visit/{id}
-    Action: Add a user doctor visit record to database. 
+    Resource: POST /drug-prescription/{id}
+    Action: Add a user drug prescription record to database. 
     Media Type: JSON
 */
 router.post('/:id', async(req, res) => {
     // Get user id and extract request body
     req.body.userId = parseInt(req.params.id);
-    const body = extractValidFields(req.body, DoctorVisitSchema);
+    const body = extractValidFields(req.body, DrugPrescriptionSchema);
     
     // TODO: 7.1.2020 Will need to do JWT auth and check if user is in DB
     // Check the request body to ensure it contains valid fields
-    if(validateAgainstSchema(body, DoctorVisitSchema)){
+    if(validateAgainstSchema(body, DrugPrescriptionSchema)){
         try{
             // Make query to database
-            const visitId = await insertNewDoctorVisit(body);
-            debug("-- Successfully inserted new doctor visit");
+            const prescriptionId = await insertNewDrugPrescription(body);
+            debug("-- Successfully inserted new drug prescription");
             // Upon success send response back
 
             // TODO: 7.1.2020 Make sure when implementing client to understand the error messages
@@ -80,7 +80,7 @@ router.post('/:id', async(req, res) => {
             // successfully saved to db. If so then the client will save(cached) post instead
             // of making another request. This will minimize resources necessary for operation.
             res.status(201).send({
-                visitId: visitId,
+                prescriptionId: prescriptionId,
                 successStatus: true //This here is the idea. Send success either true or false.
             });
         } catch (err) {
@@ -100,27 +100,27 @@ router.post('/:id', async(req, res) => {
 });
 
 // =========================================
-// =========  PATCH doctor visit ===========
+// ======  PATCH drug prescription =========
 // =========================================
 
 /*
-    Resource: PATCH /doctor-visit/{id}
-    Action: User can modify a doctor visits at this endpoint
+    Resource: PATCH /drug-prescription/{id}
+    Action: User can modify a drug prescription at this endpoint
     Media Type: JSON
 */
 router.patch('/:id', async (req, res) => {
     // Get user id and extract request body
     req.body.userId = parseInt(req.params.id);
-    const body = extractValidFields(req.body, DoctorVisitPatchSchema);
+    const body = extractValidFields(req.body, DrugPrescriptionPatchSchema);
     
     // Check if request body is valid
-    if(validateAgainstSchema(body, DoctorVisitPatchSchema)) {
+    if(validateAgainstSchema(body, DrugPrescriptionPatchSchema)) {
         // Validate authenticated user
         if(true){ // TODO: validate user via req.authenticated
             try {
-                // Query to update the doctor visit
-                await updateDoctorVisit(body);
-                debug("-- Successfully updated a doctor visit");
+                // Query to update the drug prescription
+                await updateDrugPrescription(body);
+                debug("-- Successfully updated a drug prescription");
                 res.status(200).send({
                     successStatus: true 
                 });
@@ -152,21 +152,21 @@ router.patch('/:id', async (req, res) => {
 
 
 // =========================================
-// =========  DELETE doctor visit ==========
+// =======  DELETE drug prescription =======
 // =========================================
 
-router.delete('/:userId/:visitId', async (req, res) => {
+router.delete('/:userId/:prescriptionId', async (req, res) => {
     // Get the user and visit id from uri
     const ids = {
         userId: parseInt(req.params.userId),
-        visitId: parseInt(req.params.visitId)
+        prescriptionId: parseInt(req.params.prescriptionId)
     };
     // TODO: Check user authentication 
     if(true){
         try {
-            // Make query to delete a doctor visit
-            await deleteDoctorVisit(ids);
-            debug("-- Deleted doctor visit successfully");
+            // Make query to delete a drug prescription
+            await deleteDrugPrescription(ids);
+            debug("-- Deleted drug prescription successfully");
             res.status(200).send({
                 successStatus: true
             });
