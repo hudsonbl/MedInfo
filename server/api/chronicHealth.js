@@ -58,7 +58,7 @@ router.get('/:id', async(req, res) => {
 
 /*
     Resource: POST /chronic-health/{id}
-    Action: Add a user allergy record to database. 
+    Action: Add a user chronic health issue record to database. 
     Media Type: JSON
 */
 router.post('/:id', async(req, res) => {
@@ -118,7 +118,7 @@ router.patch('/:id', async (req, res) => {
         // Validate authenticated user
         if(true){ // TODO: validate user via req.authenticated
             try {
-                // Query to update the allergy
+                // Query to update the chronic health issue
                 await updateChronicHealthIssue(body);
                 debug("-- Successfully updated a chronic health issue");
                 res.status(200).send({
@@ -156,7 +156,7 @@ router.patch('/:id', async (req, res) => {
 // =========================================
 
 router.delete('/:userId/:chronicId', async (req, res) => {
-    // Get the user and allergy id from uri
+    // Get the user and chronic health id from uri
     const ids = {
         userId: parseInt(req.params.userId),
         chronicId: parseInt(req.params.chronicId)

@@ -105,7 +105,7 @@ router.post('/:id', async(req, res) => {
 
 /*
     Resource: PATCH /allergies/{id}
-    Action: User can modify a allergy at this enpoint
+    Action: User can modify a allergy at this endpoint
     Media Type: JSON
 */
 router.patch('/:id', async (req, res) => {
