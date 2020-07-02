@@ -8,7 +8,7 @@ router.use('/doctor-visit', require('./doctorVisit'));
 router.use('/drug-prescription', require('./drugPrescriptions'));
 //router.use('/first-responder', require('./firstResponder'));
 router.use('/hospital-visit', require('./hospitalVisit'));
-//router.use('/lab-results', require('./labResults'));
+router.use('/lab-reports', require('./labReports'));
 router.use('/users', require('./users'));
 
 module.exports = router;
