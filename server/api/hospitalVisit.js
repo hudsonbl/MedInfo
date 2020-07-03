@@ -44,7 +44,7 @@ router.get('/:id', async(req, res) => {
             });
         }
     } else {
-        debug("-- Getting drug prescription failed unauthenticated user");
+        debug("-- Getting hospital visit failed unauthenticated user");
         res.status(400).send({
             errorMessage: "Unauthenticated user",
             successStatus: false 
