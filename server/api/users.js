@@ -34,19 +34,22 @@ router.post('/', async(req, res) => {
             await insertNewUser(body);
             debug("--User created successfully");
             res.status(201).send({
-                success: "User was created successfully"
+                success: "User was created successfully",
+                successStatus: true
             });
         } catch (err) {
             // Todo: Need to look into sending error messages that may intrusive and reveal
             //       too much information for client -> server interactions
             debug("--Error: ", err);
             req.status(403).send({
-                error: "Error posting user to server"
+                errorMessage: "Error posting user to server",
+                successStatus: false
             });
         }
     } else {
         req.status(400).send({
-            error: "Request body contained invalid fields"
+            errorMessage: "Request body contained invalid fields",
+            successStatus: false
         });
     }
 })
@@ -72,26 +75,30 @@ router.post('/login', async(req, res) => {
                 debug("--Login attempt verified");
                 res.status(200).send({
                     bearerToken: token,
-                    userId: authenticated.userId 
+                    userId: authenticated.userId,
+                    successStatus: true
                 });
             } else {
                 // TODO: Figure out if you want to save errors to db or other logging method
                 debug("-- Error: wrong credentials were supplied");
                 res.status(401).send({
-                    error: "Login either contained invalid email or password"
+                    errorMessage: "Login either contained invalid email or password",
+                    successStatus: false
                 });
             }
         } catch (err) {
             // TODO: Figure out if you want to save errors to db or other logging method
             debug("-- Error: ", err);
             res.status(500).send({
-                error: "Internal server error"
+                errorMessage: "Internal server error",
+                successStatus: false
             });
         }
     } else {
         // TODO: Figure out if you want to save errors to db or other logging method
         res.status(400).send({
-            error: "Request body contained invalid fields"
+            errorMessage: "Request body contained invalid fields",
+            successStatus: false
         });
     }
 });
