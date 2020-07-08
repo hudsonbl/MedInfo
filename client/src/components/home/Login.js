@@ -1,5 +1,6 @@
 import React from "react"
 
+// Logs a user into the website
 class Login extends React.Component {
     constructor(props) {
         super(props)
@@ -49,7 +50,7 @@ class Login extends React.Component {
                 this.setState({successStatus: error.successStatus})
             });
     }
-
+    // Handles user input in forms and updates state
     handleChange(event) {
         const {name, value} = event.target
         this.setState({

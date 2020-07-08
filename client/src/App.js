@@ -105,7 +105,7 @@ class App extends React.Component {
     } else if(this.state.screen.loginScreen) {
       return (<Login setScreen={this.setScreen} setClientSession={this.setClientSession}/>)
     } else if(this.state.screen.userScreen) {
-      return (<User setScreen={this.setScreen} />)
+      return (<User setScreen={this.setScreen} user={this.state.user}/>)
     }
   }
 

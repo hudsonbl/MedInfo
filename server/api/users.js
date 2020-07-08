@@ -31,7 +31,8 @@ router.post('/', async(req, res) => {
     if(validateAgainstSchema(body, UserSchema)){
         try {
             // Try inserting user to database
-            await insertNewUser(body);
+            const response = await insertNewUser(body);
+            // TODO: 7/7/2020 Depraceted warning. Not handling promise correctly upon duplicate emails. It will in future crash server.
             debug("--User created successfully");
             res.status(201).send({
                 success: "User was created successfully",

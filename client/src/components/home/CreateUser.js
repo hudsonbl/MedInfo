@@ -48,7 +48,7 @@ class CreateUser extends React.Component {
             });
     }
 
-    // Handles user input in forms
+    // Handles user input in forms and updates state
     handleChange(event) {
         const {name, value} = event.target
         this.setState({

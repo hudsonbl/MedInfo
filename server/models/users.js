@@ -1,7 +1,7 @@
 /* 
  *  User schema and data accessor methods
  */
-
+const {debug} = require('../lib/debug');
 const mysqlPool = require('../lib/mysqlPool');
 const bcrypt = require('bcryptjs');
 
@@ -34,18 +34,27 @@ exports.UserLoginSchema = UserLoginSchema;
 
 async function insertNewUser(user) {
     // Hash the user password for database storage. Never store plaintext passwords!
+    let result = []
     user.password = await bcrypt.hash(
         user.password,
         10
     );
-    
+    try{
+        const [ results ] = await mysqlPool.query(
+            "INSERT INTO users SET ?",
+            user
+        );
+        result = results;
+    }catch(err){
+        //TODO: This error message can be more verbose
+        debug("Error: ", err)
+        return err;
+    }
     // Insert the user into the database
-    const [ results ] = await mysqlPool.query(
-        "INSERT INTO users SET ?",
-        user
-    );
+    
+   
     // TODO: Needs to throw error if user email is taken
-    return results.insertId;
+    return result.insertId;
 }
 exports.insertNewUser = insertNewUser;
 
