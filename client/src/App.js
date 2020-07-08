@@ -64,7 +64,7 @@ class App extends React.Component {
           userScreen: false 
         }
       })
-    } else if(screenName === login) { // Set rendered screen to Login Screen. Extract bearer token and id for future client sessions.
+    } else if(screenName == login) { // Set rendered screen to Login Screen. Extract bearer token and id for future client sessions.
       this.setState({
         screen: {
           homeScreen: false,
@@ -73,7 +73,7 @@ class App extends React.Component {
           userScreen: false 
         }
       })
-    } else if(screenName === user) { // Set rendered screen to User screen
+    } else if(screenName == user) { // Set rendered screen to User screen
       this.setClientSession(props)
       this.setState({ 
         screen: {
