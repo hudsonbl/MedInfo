@@ -4,7 +4,7 @@
 const {debug} = require('../lib/debug');
 const mysqlPool = require('../lib/mysqlPool');
 const bcrypt = require('bcryptjs');
-
+const {generateQRCode} = require('../lib/qrCode');
 /*
  *  Schemas describing fields of user object
  */
@@ -39,6 +39,9 @@ async function insertNewUser(user) {
         user.password,
         10
     );
+
+    // Insert the user into the database
+    // TODO: Make the promise handled
     try{
         const [ results ] = await mysqlPool.query(
             "INSERT INTO users SET ?",
@@ -50,8 +53,16 @@ async function insertNewUser(user) {
         debug("Error: ", err)
         return err;
     }
-    // Insert the user into the database
-    
+    // Create QR Code image and save it
+    const qrpost = {
+        userId: result.insertId,
+        filepath: generateQRCode(result.insertId)
+    }
+
+    const [ resultQRPost ] = await mysqlPool.query(
+        'INSERT INTO qrimages SET ?',
+        qrpost
+    )
    
     // TODO: Needs to throw error if user email is taken
     return result.insertId;

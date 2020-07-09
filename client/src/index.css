@@ -38,6 +38,13 @@ input[type:checkbox]:focus{
   outline: 0;
 }
 
+.info-item-panel {
+  display: inline-flex;
+  padding: 10px;
+  width: 100%;
+  margin: auto;
+}
+
 .data-list {
   margin: auto;
   width: 50%;
@@ -47,7 +54,8 @@ input[type:checkbox]:focus{
 
 .data-items {
   float: left;
-  width: 100%;
+  width: inherit;
+  position: relative;
 }
 
 .course-list {

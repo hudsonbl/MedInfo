@@ -17,6 +17,15 @@ import Home from './components/home/Home'
 import CreateUser from './components/home/CreateUser'
 import Login from './components/home/Login'
 import User from './components/userview/User'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useLocation
+} from "react-router-dom";
+
+import FirstResponder from './components/firstresponder/FirstResponder';
 
 // App Contains the main functionality of the website. 
 // Works as a main html page, that calls components that are controlled by user experience.
@@ -110,13 +119,27 @@ class App extends React.Component {
   }
 
   render() {
-    
+  
     return (
       <div>
-        {this.screenRender()}
+        <Router>
+        <Switch>
+            <Route exact path="/" >
+              {this.screenRender()}
+            </Route>
+            <Route path="/first-responder/:userId" component={FirstResponder}/>
+        </Switch>
+        </Router>
       </div>
     )
   }
 }
 
 export default App;
+
+const UserId = ({match}) => (
+  <div>
+    <h1>Inside of first responder response</h1>
+    <h2>For user: {match.params.userId}</h2>
+  </div>
+)

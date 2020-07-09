@@ -1,4 +1,5 @@
-import React from 'react' 
+import React from 'react';
+import AllergyRow from '../userview/items/AllergyRow';
 import {
     TableContainer,
     TableBody,
@@ -8,12 +9,10 @@ import {
     Paper
 } from '@material-ui/core';
 
-import AllergyRow from './AllergyRow'
-// Component: Creates the dropdown table for allergies
-class AllergyList extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
+class FirstResponder extends React.Component { 
+    constructor(){
+        super()
+        this.state={
             data: [],
             successStatus: false
         }
@@ -24,13 +23,11 @@ class AllergyList extends React.Component {
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.state.bearerToken}`,
                 'accept': 'application/json'
             }
         }
-        console.log("Props: ", this.props.state.userId)
-        console.log("Props: ", this.props.state)
-        fetch(`http://localhost:6000/allergies/${this.props.state.userId}`, requestOptions)
+
+        fetch(`http://localhost:6000/first-responder/${this.props.match.params.userId}`, requestOptions)
             .then(async response => {
                 const data = await response.json();
 
@@ -46,23 +43,27 @@ class AllergyList extends React.Component {
             });
     }
 
-    render (){ 
+    render() {
         const userData = this.state.data.map(allergy => <AllergyRow key={allergy.allergyId} allergy={allergy} />)
         return (
-            <TableContainer component={Paper} >
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="left">Allergy</TableCell>
-                        <TableCell align="left">Medication</TableCell>
-                        <TableCell align="left">Symptoms</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                   {userData}
-                </TableBody>
-            </TableContainer>
+            <div>
+                <h1>User: {this.props.match.params.userId}</h1>
+                <TableContainer component={Paper} >
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="left">Allergy</TableCell>
+                            <TableCell align="left">Medication</TableCell>
+                            <TableCell align="left">Symptoms</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {userData}
+                    </TableBody>
+                </TableContainer>
+            </div>
+            
         )
     }
 }
 
-export default AllergyList
+export default FirstResponder

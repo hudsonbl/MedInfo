@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 
 import ImmunizationRecordRow from './ImmunizationRecordRow'
-
+// Component: Creates the dropdown table for Immunization Records
 class ImmunizationRecordList extends React.Component {
     constructor(props) {
         super(props)
@@ -18,7 +18,7 @@ class ImmunizationRecordList extends React.Component {
             successStatus: false
         }
     }
-
+    // Query for data to back end API
     componentDidMount(){
         const requestOptions = {
             method: 'GET',

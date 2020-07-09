@@ -11,7 +11,7 @@ import {
 import LabReportRow from './LabReportRow'
 
 // TODO: This will deal with file types in the future. User may request to access or download a file ex: pdf, x-ray.jpg what ever
-
+// Component: Creates the dropdown table for Lab Reports    
 class LabReportList extends React.Component {
     constructor(props) {
         super(props)
@@ -20,7 +20,7 @@ class LabReportList extends React.Component {
             successStatus: false
         }
     }
-
+    // Query for data to back end API
     componentDidMount(){
         const requestOptions = {
             method: 'GET',

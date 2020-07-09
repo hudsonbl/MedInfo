@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 
 import DrugPrescriptionRow from './DrugPrescriptionRow'
-
+// Component: Creates the dropdown table for Drug Prescriptions
 class DrugPrescriptionList extends React.Component {
     constructor(props) {
         super(props)
@@ -18,7 +18,7 @@ class DrugPrescriptionList extends React.Component {
             successStatus: false
         }
     }
-
+    // Query for data to back end API
     componentDidMount(){
         const requestOptions = {
             method: 'GET',

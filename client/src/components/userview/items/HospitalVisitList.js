@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 
 import HospitalVisitRow from './HospitalVisitRow'
-
+// Component: Creates the dropdown table for Hospital Visits
 class HospitalVisitList extends React.Component {
     constructor(props) {
         super(props)
@@ -18,7 +18,7 @@ class HospitalVisitList extends React.Component {
             successStatus: false
         }
     }
-
+    // Query for data to back end API
     componentDidMount(){
         const requestOptions = {
             method: 'GET',

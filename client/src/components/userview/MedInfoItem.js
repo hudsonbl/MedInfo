@@ -4,6 +4,9 @@ import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
 import AllergyList from './items/AllergyList';
 import DoctorVisitList from './items/DoctorVisitList';
 import ChronicHealthList from './items/ChronicHealthList';
@@ -11,6 +14,7 @@ import DrugPrescriptionList from './items/DrugPrescriptionList';
 import HospitalVisitList from './items/HospitalVisitList';
 import ImmunizationRecordList from './items/ImmunizationRecordList';
 import LabReportList from './items/LabReportList';
+
 
 // Component: Acts as the outer DOM component for each Med Info Item. 
 function MedInfoItem(props) {
@@ -24,9 +28,20 @@ function MedInfoItem(props) {
     return (
         <div className='data-items'>
         <Accordion square expanded={expanded === `${props.panel}`} onChange={handleChange(`${props.panel}`)}>
+          <div className="info-item-panel">
             <AccordionSummary aria-controls={`${props.panel}d-content`} id={`${props.panel}d-header`}>
-            <Typography>{props.panel}</Typography>
+            
+            <Typography>
+              
+                {props.panel} 
+                <Button variant="contained" color="primary">
+                  Primary
+                </Button>
+              
+            </Typography>
+            
             </AccordionSummary>
+            </div>
             <AccordionDetails>
             <Typography>
                 {selectInfoItem(props)}
@@ -38,6 +53,28 @@ function MedInfoItem(props) {
 }
 
 export default MedInfoItem
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
+
+function ContainedButtons() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <Button variant="contained" color="primary">
+        Primary
+      </Button>
+    </div>
+  );
+}
+
+
 
 // Function: helps selects med info item based on what the user clicked
 function selectInfoItem(props){
