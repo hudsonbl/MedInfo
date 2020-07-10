@@ -10,7 +10,7 @@ from the back end api. Load balancers may have server selection strategies. Serv
 of using one server to service many requests. You may set up many servers to handle n number of requests. A load balancer (reverse proxy) can then bounce 
 a request to a server. Depending on the request and service your server provides will alter your server selection strategy. <br />
 <br />
-Server Selection Strategies: <br />
+**Server Selection Strategies:** <br />
     1. Round Robin (optional weight)<br />
     2. Random Selection (As the name implies)<br />
     3. Performance Based (Server may have better performance thus able to handle more data)<br />
@@ -35,7 +35,7 @@ a server. [3]
 
 ## Logging
 [1] Use winston and morgan to log. Winston uses things called transports. A trasnport carries the log data to file, console, or http.<br />
-Summary of settings for transport: <br />
+**Summary of settings for transport: **<br />
     1. Level - level of messages to log<br />
     2. filename - the file to be used to write log data<br />
     3. handleExceptions - catch and log unhandled exceptions<br />
@@ -44,7 +44,7 @@ Summary of settings for transport: <br />
     6. maxFiles - Limit the number of files created when the size of the logfile is exceeded<br />
     7. colorize - Colorize output. <br />
 <br />
-Logging levels:<br />
+**Logging levels:**<br />
     0: error<br />
     1: warn<br />
     2: info <br />
