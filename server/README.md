@@ -8,14 +8,14 @@ to the server. The server may then respond to the request where the reverse prox
 is very useful for using load balancers. Load balancers can have many different schemes. To sum up their use, is they are used to do asynchronous work
 from the back end api. Load balancers may have server selection strategies. Server selection strategies aim to decrease the load on a given server. Instead
 of using one server to service many requests. You may set up many servers to handle n number of requests. A load balancer (reverse proxy) can then bounce 
-a request to a server. Depending on the request and service your server provides will alter your server selection strategy. 
-
-Server Selection Strategies: 
-    1. Round Robin (optional weight)
-    2. Random Selection (As the name implies)
-    3. Performance Based (Server may have better performance thus able to handle more data)
-    4. IP-Routing (Servicing regions of users can bounce to certain servers)
-    5. Path Based (URL path)
+a request to a server. Depending on the request and service your server provides will alter your server selection strategy. <br />
+<br />
+Server Selection Strategies: <br />
+    1. Round Robin (optional weight)<br />
+    2. Random Selection (As the name implies)<br />
+    3. Performance Based (Server may have better performance thus able to handle more data)<br />
+    4. IP-Routing (Servicing regions of users can bounce to certain servers)<br />
+    5. Path Based (URL path)<br />
 
 ## Sharding and Replication
 
@@ -34,39 +34,39 @@ restart, others may just require some attention for future debugging. SLI, SLO, 
 a server. [3]
 
 ## Logging
-[1] Use winston and morgan to log. Winston uses things called transports. A trasnport carries the log data to file, console, or http.
-Summary of settings for transport: 
-    1. Level - level of messages to log
-    2. filename - the file to be used to write log data
-    3. handleExceptions - catch and log unhandled exceptions
-    4. json - records log data in json format
-    5. maxsize - Max size of log file, in bytes, before a new file will be created
-    6. maxFiles - Limit the number of files created when the size of the logfile is exceeded
-    7. colorize - Colorize output. 
+[1] Use winston and morgan to log. Winston uses things called transports. A trasnport carries the log data to file, console, or http.<br />
+Summary of settings for transport: <br />
+    1. Level - level of messages to log<br />
+    2. filename - the file to be used to write log data<br />
+    3. handleExceptions - catch and log unhandled exceptions<br />
+    4. json - records log data in json format<br />
+    5. maxsize - Max size of log file, in bytes, before a new file will be created<br />
+    6. maxFiles - Limit the number of files created when the size of the logfile is exceeded<br />
+    7. colorize - Colorize output. <br />
+<br />
+Logging levels:<br />
+    0: error<br />
+    1: warn<br />
+    2: info <br />
+    3: verbose<br />
+    4: debug<br />
+    5: silly<br />
 
-Logging levels:
-    0: error
-    1: warn
-    2: info 
-    3: verbose
-    4: debug
-    5: silly
+[2] Prometheus is a logging db that can monitor your nodejs application. When you're monitoring you need to solve the following challenges<br />
+    1. Instrumentation: Safely instrumenting our code with minimal performance overhead<br />
+    2. Metrics exposition: Exposing our metrics for Prometheus with an HTTP endpoint<br />
+    3. Hosting Prometheus: Having a well configured Prometheus running<br />
+    4. Extracting value: Writing queires that are statistically correct<br />
+    5. Visualizing: Building dashboards and visualizing our queries<br />
+    6. AlertingGET : Setting up efficient alerts<br />
+    7. Paging: Get notified about alerts with applying escalation policies for paging<br />
 
-[2] Prometheus is a logging db that can monitor your nodejs application. When you're monitoring you need to solve the following challenges
-    1. Instrumentation: Safely instrumenting our code with minimal performance overhead
-    2. Metrics exposition: Exposing our metrics for Prometheus with an HTTP endpoint
-    3. Hosting Prometheus: Having a well configured Prometheus running
-    4. Extracting value: Writing queires that are statistically correct
-    5. Visualizing: Building dashboards and visualizing our queries
-    6. AlertingGET : Setting up efficient alerts
-    7. Paging: Get notified about alerts with applying escalation policies for paging
-
-[4] Docker Host Monitoring with Prometheus and Grafana
-    Warning(Using this in a production setting: Set up security settings. Launching this exposes the active ports. Look into documentation [5])
+[4] Docker Host Monitoring with Prometheus and Grafana<br />
+    Warning(Using this in a production setting: Set up security settings. Launching this exposes the active ports. Look into documentation [5])<br />
 
 Using Grafana 
 ### References
-[1] https://www.digitalocean.com/community/tutorials/how-to-use-winston-to-log-node-js-applications
-[2] https://blog.risingstack.com/node-js-performance-monitoring-with-prometheus/
-[3] https://www.fiixsoftware.com/how-do-maintainability-and-reliability-affect-availability/#:~:text=System%20availability%20(also%20known%20as,Functioning%20equipment
-[4] https://github.com/vegasbrianc/prometheus/
+[1] https://www.digitalocean.com/community/tutorials/how-to-use-winston-to-log-node-js-applications<br />
+[2] https://blog.risingstack.com/node-js-performance-monitoring-with-prometheus/<br />
+[3] https://www.fiixsoftware.com/how-do-maintainability-and-reliability-affect-availability/#:~:text=System%20availability%20(also%20known%20as,Functioning%20equipment<br />
+[4] https://github.com/vegasbrianc/prometheus/<br />
