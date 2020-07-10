@@ -6,6 +6,10 @@ import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+
+import Modal from 'react-bootstrap/Modal'
+
 
 import AllergyList from './items/AllergyList';
 import DoctorVisitList from './items/DoctorVisitList';
@@ -18,63 +22,15 @@ import LabReportList from './items/LabReportList';
 
 // Component: Acts as the outer DOM component for each Med Info Item. 
 function MedInfoItem(props) {
-
-    const [expanded, setExpanded] = React.useState('');
-    // Handles when a Item is clicked opens dropdown accordian
-    const handleChange = (panel) => (event, newExpanded) => {
-        setExpanded(newExpanded ? panel : false);
-    };
     
     return (
         <div className='data-items'>
-        <Accordion square expanded={expanded === `${props.panel}`} onChange={handleChange(`${props.panel}`)}>
-          <div className="info-item-panel">
-            <AccordionSummary aria-controls={`${props.panel}d-content`} id={`${props.panel}d-header`}>
-            
-            <Typography>
-              
-                {props.panel} 
-                <Button variant="contained" color="primary">
-                  Primary
-                </Button>
-              
-            </Typography>
-            
-            </AccordionSummary>
-            </div>
-            <AccordionDetails>
-            <Typography>
-                {selectInfoItem(props)}
-            </Typography>
-            </AccordionDetails>
-        </Accordion>
+          {CustomizedAccordions(props)}
         </div>
     )
 }
 
 export default MedInfoItem
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-}));
-
-function ContainedButtons() {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <Button variant="contained" color="primary">
-        Primary
-      </Button>
-    </div>
-  );
-}
-
-
 
 // Function: helps selects med info item based on what the user clicked
 function selectInfoItem(props){
@@ -105,46 +61,94 @@ function selectInfoItem(props){
             console.log("error");
     }
 }
-// Function: This is a part of material UI functions
 const Accordion = withStyles({
-    root: {
-      border: '1px solid rgba(0, 0, 0, .125)',
-      boxShadow: 'none',
-      '&:not(:last-child)': {
-        borderBottom: 0,
-      },
-      '&:before': {
-        display: 'none',
-      },
-      '&$expanded': {
-        margin: 'auto',
-      },
+  root: {
+    border: '1px solid rgba(0, 0, 0, .125)',
+    boxShadow: 'none',
+    '&:not(:last-child)': {
+      borderBottom: 0,
     },
-    expanded: {},
+    '&:before': {
+      display: 'none',
+    },
+    '&$expanded': {
+      margin: 'auto',
+    },
+  },
+  expanded: {},
 })(MuiAccordion);
-  
 
-// Function: This is a part of material UI functions
 const AccordionSummary = withStyles({
-    root: {
-      backgroundColor: 'rgba(0, 0, 0, .03)',
-      borderBottom: '1px solid rgba(0, 0, 0, .125)',
-      marginBottom: -1,
+  root: {
+    backgroundColor: 'rgba(0, 0, 0, .03)',
+    borderBottom: '1px solid rgba(0, 0, 0, .125)',
+    marginBottom: -1,
+    minHeight: 56,
+    '&$expanded': {
       minHeight: 56,
-      '&$expanded': {
-        minHeight: 56,
-      },
     },
-    content: {
-      '&$expanded': {
-        margin: '12px 0',
-      },
+  },
+  content: {
+    '&$expanded': {
+      margin: '12px 0',
     },
-    expanded: {},
-  })(MuiAccordionSummary);
-// Function: This is a part of material UI functions
-  const AccordionDetails = withStyles((theme) => ({
-    root: {
-      padding: theme.spacing(2),
+  },
+  expanded: {},
+})(MuiAccordionSummary);
+
+const AccordionDetails = withStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+}))(MuiAccordionDetails);
+
+function CustomizedAccordions(props) {
+  const [expanded, setExpanded] = React.useState(props.panel);
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+
+  return (
+    <div>
+      <Accordion square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+          <Typography>
+            {props.panel}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div>
+          {ContainedButtons(props)}
+          </div>
+         
+          {selectInfoItem(props)}
+        </AccordionDetails>
+      </Accordion>
+    </div>
+  );
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
     },
-  }))(MuiAccordionDetails);
+  },
+}));
+
+function ContainedButtons(props) {
+  const classes = useStyles();
+  const [modalShow, setModalShow] = React.useState(false);
+
+  return (
+    <div>
+      <Button variant="contained" color="primary" >
+        Add
+      </Button>
+
+    </div>
+      
+  );
+}
+

@@ -8,8 +8,8 @@ function generateQRCode(userId) {
     const url = `http://192.168.1.12:3000/first-responder/${userId}`;
     qrcode.toFile(filepath, url, {
         color: {
-			dark: '#0000',
-			light: '#FFFF'
+			dark: '#000',
+			light: '#FFF'
 		}
 	}, function (err) {
 		if (err) {console.log('done: ', err); throw err}
