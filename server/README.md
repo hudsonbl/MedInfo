@@ -17,6 +17,8 @@ a request to a server. Depending on the request and service your server provides
     4. IP-Routing (Servicing regions of users can bounce to certain servers)<br />
     5. Path Based (URL path)<br />
 
+Traefik only uses a Round Robin Server Selection Strategy for its load balancer.
+
 ## Sharding and Replication
 
 
@@ -63,6 +65,9 @@ a server. [3]
 
 [4] Docker Host Monitoring with Prometheus and Grafana<br />
     Warning(Using this in a production setting: Set up security settings. Launching this exposes the active ports. Look into documentation [5])<br />
+<br />
+[5] "Promethues is a all purpose metric scraper. It is a monitoring/alerting solution responsible for sending events/metrics to be ingested.
+It is configured to visit exporters to collect the metric for aggregation. Exporter is a program that will prodcue the metrics plaintext page when asked." (all this is straight from website)
 
 Using Grafana 
 ### References
@@ -70,3 +75,9 @@ Using Grafana
 [2] https://blog.risingstack.com/node-js-performance-monitoring-with-prometheus/<br />
 [3] https://www.fiixsoftware.com/how-do-maintainability-and-reliability-affect-availability/#:~:text=System%20availability%20(also%20known%20as,Functioning%20equipment<br />
 [4] https://github.com/vegasbrianc/prometheus/<br />
+[5] https://medium.com/teamzerolabs/node-js-monitoring-with-prometheus-grafana-3056362ccb80</br>
+
+
+### Useful commands
+docker service ls
+docker rm service {Service Name}

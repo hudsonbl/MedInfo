@@ -4,12 +4,15 @@ const api = require('./api');
 const cors = require('cors');
 const {debug} = require('./lib/debug');
 const app = express();
+const {metrics} = require('./lib/exporter');
 const port = process.env.PORT || 6000;
 
+//app.use(metrics);
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 app.use(morgan('dev'));
+
 
 app.use('/', api);
 

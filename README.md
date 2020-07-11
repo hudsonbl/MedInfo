@@ -1,3 +1,3 @@
 # MedInfo
 
-Hell ya brother!
+Hell ya bruther!
