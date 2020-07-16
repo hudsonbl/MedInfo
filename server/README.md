@@ -70,7 +70,7 @@ a server. [3]
 [5] "Promethues is a all purpose metric scraper. It is a monitoring/alerting solution responsible for sending events/metrics to be ingested.
 It is configured to visit exporters to collect the metric for aggregation. Exporter is a program that will prodcue the metrics plaintext page when asked." (all this is straight from website)
 
-Sort of the logging ecosystem works like this. Prometheues logs incoming requests to another server. Grafana takes the data every predestinated time. It will graphically monitor the data fed from Prometheus.
+Sort of the logging ecosystem works like this. Prometheues logs incoming requests to another server. Grafana takes the data every predestinated time. It will graphically monitor the data fed from Prometheus. Sends alerts based off of key metrics you explicitly declare for both Prometheus and Grafana to handle.
 
 Using Grafana 
 ### References

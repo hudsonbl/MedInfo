@@ -98,3 +98,19 @@ async function validateUser(email, password){
     };
 }
 exports.validateUser = validateUser;
+
+/*
+    Query: Checks if encrypted password matches
+    Returns: userId and true or false if user is verified.
+    Return Value: JSON Object
+ */
+async function getUserById(userId){
+    const [ results ] = await mysqlPool.query(
+        'SELECT name FROM users WHERE userId=?',
+        [userId]
+    )
+    debug("== Results: ", results)
+    console.log("==== Results: ", results);
+    return results;
+}
+exports.getUserById = getUserById;

@@ -1,23 +1,7 @@
-import React from 'react'
-
-function Home(props) {
-    const path = {
-        path: '/test',
-        pathName: 'create'
-    }
-    return(
-        <div>
-            <h1>This is a home page</h1>
-            <button onClick={() => props.setScreen(path.pathName)}> Test Screen </button>
-        </div>
-    )
-}
-
-export default Home
-
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import ContainedButtons from './ButtonSubmit';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,12 +12,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FormPropsTextFields() {
+export default function FormPropsTextFields(props) {
   const classes = useStyles();
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
       <div>
+        <h3></h3>
         <TextField
           required
           id="outlined-required"
@@ -81,6 +66,7 @@ export default function FormPropsTextFields() {
           helperText="Some important text"
           variant="outlined"
         />
+        {ContainedButtons(props)}
       </div>
     </form>
   );

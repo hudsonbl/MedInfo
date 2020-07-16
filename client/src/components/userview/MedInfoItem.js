@@ -7,8 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-
-import Modal from 'react-bootstrap/Modal'
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 
 
 import AllergyList from './items/AllergyList';
@@ -18,6 +19,7 @@ import DrugPrescriptionList from './items/DrugPrescriptionList';
 import HospitalVisitList from './items/HospitalVisitList';
 import ImmunizationRecordList from './items/ImmunizationRecordList';
 import LabReportList from './items/LabReportList';
+import TransitionModal from './TransitionModal'
 
 
 // Component: Acts as the outer DOM component for each Med Info Item. 
@@ -119,7 +121,7 @@ function CustomizedAccordions(props) {
         </AccordionSummary>
         <AccordionDetails>
           <div>
-          {ContainedButtons(props)}
+            {TransitionModal(props)}
           </div>
          
           {selectInfoItem(props)}
@@ -128,27 +130,3 @@ function CustomizedAccordions(props) {
     </div>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-}));
-
-function ContainedButtons(props) {
-  const classes = useStyles();
-  const [modalShow, setModalShow] = React.useState(false);
-
-  return (
-    <div>
-      <Button variant="contained" color="primary" >
-        Add
-      </Button>
-
-    </div>
-      
-  );
-}
-

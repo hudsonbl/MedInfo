@@ -23,7 +23,7 @@ const { debug } = require('../lib/debug');
     Action: Gets all doctor visits from user. 
     Media Type: JSON
 */
-router.get('/:id', async(req, res) => {
+router.get('/:id', requireAuthentication, async(req, res) => {
     // Get user id TODO: will change userid variable to req.userId in future as an appended secure number from lib/auth
     const userId = parseInt(req.params.id);
     // Check if user is a valid user from db
@@ -61,7 +61,7 @@ router.get('/:id', async(req, res) => {
     Action: Add a user doctor visit record to database. 
     Media Type: JSON
 */
-router.post('/:id', async(req, res) => {
+router.post('/:id', requireAuthentication, async(req, res) => {
     // Get user id and extract request body
     req.body.userId = parseInt(req.params.id);
     const body = extractValidFields(req.body, DoctorVisitSchema);
@@ -108,7 +108,7 @@ router.post('/:id', async(req, res) => {
     Action: User can modify a doctor visits at this endpoint
     Media Type: JSON
 */
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', requireAuthentication, async (req, res) => {
     // Get user id and extract request body
     req.body.userId = parseInt(req.params.id);
     const body = extractValidFields(req.body, DoctorVisitPatchSchema);
@@ -155,7 +155,7 @@ router.patch('/:id', async (req, res) => {
 // =========  DELETE doctor visit ==========
 // =========================================
 
-router.delete('/:userId/:visitId', async (req, res) => {
+router.delete('/:userId/:visitId', requireAuthentication, async (req, res) => {
     // Get the user and visit id from uri
     const ids = {
         userId: parseInt(req.params.userId),

@@ -49,7 +49,7 @@ class AllergyList extends React.Component {
     render (){ 
         const userData = this.state.data.map(allergy => <AllergyRow key={allergy.allergyId} allergy={allergy} />)
         return (
-            <TableContainer component={Paper} >
+            <TableContainer component={Paper}>
                 <TableHead>
                     <TableRow>
                         <TableCell align="left">Allergy</TableCell>

@@ -23,7 +23,7 @@ const { debug } = require('../lib/debug');
     Action: Gets all lab reports from user. 
     Media Type: JSON
 */
-router.get('/:id', async(req, res) => {
+router.get('/:id', requireAuthentication, async(req, res) => {
     // Get user id TODO: will change user id variable to req.userId in future as an appended secure number from lib/auth
     const userId = parseInt(req.params.id);
     // Check if user is a valid user from db
@@ -61,7 +61,7 @@ router.get('/:id', async(req, res) => {
     Action: Add a user lab reports record to database. 
     Media Type: JSON
 */
-router.post('/:id', async(req, res) => {
+router.post('/:id', requireAuthentication, async(req, res) => {
     // Get user id and extract request body
     req.body.userId = parseInt(req.params.id);
     const body = extractValidFields(req.body, LabReportSchema);
@@ -108,7 +108,7 @@ router.post('/:id', async(req, res) => {
     Action: User can modify a hospital visit at this endpoint
     Media Type: JSON
 */
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', requireAuthentication, async (req, res) => {
     // Get user id and extract request body
     req.body.userId = parseInt(req.params.id);
     const body = extractValidFields(req.body, LabReportPatchSchema);
@@ -155,7 +155,7 @@ router.patch('/:id', async (req, res) => {
 // ==========  DELETE lab report ===========
 // =========================================
 
-router.delete('/:userId/:reportId', async (req, res) => {
+router.delete('/:userId/:reportId', requireAuthentication, async (req, res) => {
     // Get the user and report id from uri
     const ids = {
         userId: parseInt(req.params.userId),
