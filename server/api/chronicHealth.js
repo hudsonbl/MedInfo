@@ -27,7 +27,7 @@ router.get('/:id', requireAuthentication, async(req, res) => {
     // Get user id TODO: will change userid variable to req.userId in future as an appended secure number from lib/auth
     const userId = parseInt(req.params.id);
     // Check if user is a valid user from db
-    if(true) { //TODO: this will actually check for authentic user in future
+    if(req.authenticated) { //TODO: this will actually check for authentic user in future
         try {
             // Query for the list of allergies
             const health = await getChronicHealthByUserId(userId);
@@ -68,7 +68,7 @@ router.post('/:id', requireAuthentication, async(req, res) => {
     
     // TODO: 7.1.2020 Will need to do JWT auth and check if user is in DB
     // Check the request body to ensure it contains valid fields
-    if(validateAgainstSchema(body, ChronicHealthSchema)){
+    if(validateAgainstSchema(body, ChronicHealthSchema) && req.authenticated){
         try{
             // Make query to database
             const insertId = await insertNewChronicHealthIssue(body);
@@ -116,7 +116,7 @@ router.patch('/:id', requireAuthentication, async (req, res) => {
     // Check if request body is valid
     if(validateAgainstSchema(body, ChronicHealthPatchSchema)) {
         // Validate authenticated user
-        if(true){ // TODO: validate user via req.authenticated
+        if(req.authenticated){ // TODO: validate user via req.authenticated
             try {
                 // Query to update the chronic health issue
                 await updateChronicHealthIssue(body);
@@ -162,7 +162,7 @@ router.delete('/:userId/:chronicId', requireAuthentication, async (req, res) => 
         chronicId: parseInt(req.params.chronicId)
     };
     // TODO: Check user authentication 
-    if(true){
+    if(req.authenticated){
         try {
             // Make query to delete a allergy
             await deleteChronicHealthIssue(ids);

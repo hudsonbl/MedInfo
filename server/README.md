@@ -9,6 +9,9 @@ is very useful for using load balancers. Load balancers can have many different 
 from the back end api. Load balancers may have server selection strategies. Server selection strategies aim to decrease the load on a given server. Instead
 of using one server to service many requests. You may set up many servers to handle n number of requests. A load balancer (reverse proxy) can then bounce 
 a request to a server. Depending on the request and service your server provides will alter your server selection strategy. <br />
+
+side note ^^ I think I should only talk about reverse proxies
+
 <br />
 **Server Selection Strategies:** <br />
     1. Round Robin (optional weight)<br />
@@ -72,6 +75,9 @@ It is configured to visit exporters to collect the metric for aggregation. Expor
 
 Sort of the logging ecosystem works like this. Prometheues logs incoming requests to another server. Grafana takes the data every predestinated time. It will graphically monitor the data fed from Prometheus. Sends alerts based off of key metrics you explicitly declare for both Prometheus and Grafana to handle.
 
+## Rate Limiting
+[6] talks about rate limiting. 
+
 Using Grafana 
 ### References
 [1] https://www.digitalocean.com/community/tutorials/how-to-use-winston-to-log-node-js-applications<br />
@@ -79,8 +85,9 @@ Using Grafana
 [3] https://www.fiixsoftware.com/how-do-maintainability-and-reliability-affect-availability/#:~:text=System%20availability%20(also%20known%20as,Functioning%20equipment<br />
 [4] https://github.com/vegasbrianc/prometheus/<br />
 [5] https://medium.com/teamzerolabs/node-js-monitoring-with-prometheus-grafana-3056362ccb80</br>
+[6] https://stripe.com/blog/rate-limiters <br />
 
 
 ### Useful commands
-docker service ls
-docker rm service {Service Name}
+docker service ls<br />
+docker rm service {Service Name}<br />

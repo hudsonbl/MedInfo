@@ -5,7 +5,7 @@
 
 const jwt = require('jsonwebtoken');
 const secretKey = process.env.SECRET_KEY; 
-const { getUserById } = require('../models/users');
+const { getUserByEmail, getUserById } = require('../models/users');
 
 function generateAuthToken (userId) {
     const payload = { sub: userId };
@@ -24,14 +24,21 @@ async function requireAuthentication(req, res, next){
     
     // Get user role is very important for what data privildge user has access to
     try {
-        const role = await getUserById(req.body.id);
+        console.log(" == User ID of user ->", req.params.id);
+        const user = await getUserById(req.params.id);
         const payload = jwt.verify(token, secretKey);
         req.user = payload.sub;
-        req.role = role.role;
-        req.authenticated = true;
-        console.log(" == Authenticated Action");
+        req.name = user;
+        console.log("Payload is: ", payload.sub);
+        if(req.user && req.name){
+            req.authenticated = true;
+            console.log(" == Authenticated Action");
+        } else {
+            req.authenticated = false;
+            console.log(" == Unauthenticated Action");
+        }
     } catch (err) {
-        console.log(" == Unauthenticated Action");
+        console.log(" == Unauthenticated Action", err);
         req.authenticated = false;
     }
     next();

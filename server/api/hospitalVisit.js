@@ -27,7 +27,7 @@ router.get('/:id', requireAuthentication, async(req, res) => {
     // Get user id TODO: will change user id variable to req.userId in future as an appended secure number from lib/auth
     const userId = parseInt(req.params.id);
     // Check if user is a valid user from db
-    if(true) { //TODO: this will actually check for authentic user in future
+    if(req.authenticated) { //TODO: this will actually check for authentic user in future
         try {
             // Query for the list of hospital visits
             const visits = await getHosipitalVisitsByUserId(userId);
@@ -68,7 +68,7 @@ router.post('/:id', requireAuthentication, async(req, res) => {
     
     // TODO: 7.1.2020 Will need to do JWT auth and check if user is in DB
     // Check the request body to ensure it contains valid fields
-    if(validateAgainstSchema(body, HosipitalVisitSchema)){
+    if(validateAgainstSchema(body, HosipitalVisitSchema) && req.authenticated){
         try{
             // Make query to database
             const visitId = await insertNewHosipitalVisit(body);
@@ -116,7 +116,7 @@ router.patch('/:id', requireAuthentication, async (req, res) => {
     // Check if request body is valid
     if(validateAgainstSchema(body, HosipitalVisitPatchSchema)) {
         // Validate authenticated user
-        if(true){ // TODO: validate user via req.authenticated
+        if(req.authenticated){ // TODO: validate user via req.authenticated
             try {
                 // Query to update the hospital visit
                 await updateHosipitalVisit(body);
@@ -162,7 +162,7 @@ router.delete('/:userId/:visitId', requireAuthentication, async (req, res) => {
         visitId: parseInt(req.params.visitId)
     };
     // TODO: Check user authentication 
-    if(true){
+    if(req.authenticated){
         try {
             // Make query to delete a hospital visit
             await deleteHosipitalVisit(ids);

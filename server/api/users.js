@@ -28,6 +28,7 @@ router.post('/', async(req, res) => {
     // TODO: I may be able to add extra security within validateAgainstSchema where it may 
     //       Validate the user input. Ensure no XSS or SQL injection attacks occur.
     //       This action may happen on client side. Do research. 
+    debug("BODY: ", body);
     if(validateAgainstSchema(body, UserSchema)){
         try {
             // Try inserting user to database
@@ -42,13 +43,13 @@ router.post('/', async(req, res) => {
             // Todo: Need to look into sending error messages that may intrusive and reveal
             //       too much information for client -> server interactions
             debug("--Error: ", err);
-            req.status(403).send({
+            res.status(403).send({
                 errorMessage: "Error posting user to server",
                 successStatus: false
             });
         }
     } else {
-        req.status(400).send({
+        res.status(400).send({
             errorMessage: "Request body contained invalid fields",
             successStatus: false
         });

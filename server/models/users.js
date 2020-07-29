@@ -76,6 +76,7 @@ exports.insertNewUser = insertNewUser;
     Return Value: JSON
  */
 async function getUserByEmail(email) {
+    console.log("Email==========> ", email)
     const [ results ] = await mysqlPool.query(
         "SELECT * FROM users WHERE email=?",
         [email]
@@ -83,7 +84,7 @@ async function getUserByEmail(email) {
 
     return results[0];
 }
-
+exports.getUserByEmail = getUserByEmail;
 /*
     Query: Checks if encrypted password matches
     Returns: userId and true or false if user is verified.
@@ -109,8 +110,7 @@ async function getUserById(userId){
         'SELECT name FROM users WHERE userId=?',
         [userId]
     )
-    debug("== Results: ", results)
-    console.log("==== Results: ", results);
-    return results;
+    debug("== Results: ", results[0].name);
+    return results[0].name;
 }
 exports.getUserById = getUserById;
