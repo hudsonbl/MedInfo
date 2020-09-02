@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import validator from 'email-validator'
 import Popover from '@material-ui/core/Popover';
+import {createUserURL} from '../../config/configValues'
 
 const parentURL = '/';
 
@@ -88,7 +89,7 @@ const SignUp = () => {
 		// Only send request to server if email is a valid email.
 		if(validator.validate(email)){
 			// POST request to server to create a new user
-			fetch(`http://localhost:6000/users`, requestOptions)
+			fetch(`${createUserURL}`, requestOptions)
             .then(async response => {
                 const data = await response.json();
 

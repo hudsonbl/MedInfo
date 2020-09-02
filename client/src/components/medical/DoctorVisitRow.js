@@ -9,15 +9,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteDoctor } from '../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import { sendDelete } from './modals/modal-api/ModalServerRequest'
-
+import {doctorURL} from '../../config/configValues';
 function DoctorVisitRow(props) {
 
     const dispatch = useDispatch()
     const userInfo = useSelector(state => state.userInfoReducer);
 
     function deleteRow(){
-        const url = 'http://localhost:6000/doctor-visit/'
-        sendDelete(props.visit.visitId, url, dispatch, userInfo, deleteDoctor)
+        sendDelete(props.visit.visitId, doctorURL, dispatch, userInfo, deleteDoctor)
     }
 
     return (

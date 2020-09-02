@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import { addImmunization, editImmunization } from '../../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import { sendEdit, sendNewData } from './modal-api/ModalServerRequest';
+import {immunizationURL} from '../../../config/configValues'; 
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,8 +49,7 @@ const ImmunizationRecordModal = (props) => {
 
     const addNewData = (event) => {
         event.preventDefault()
-        console.log("Is it getting here?")
-        const url = 'http://localhost:6000/immunization-record/'
+        
         if(props.dataType === 'EDIT_DATA'){
             const body = {
                 recordId: props.record.recordId,
@@ -58,7 +58,7 @@ const ImmunizationRecordModal = (props) => {
                 administeredBy: administeredBy,
                 nextDose: nextDose
             }
-            sendEdit(body, url, props, dispatch, userInfo, editImmunization)
+            sendEdit(body, immunizationURL, props, dispatch, userInfo, editImmunization)
         }else if(props.dataType === 'NEW_DATA'){
             const body = {
                 vaccine: vaccine,
@@ -66,7 +66,7 @@ const ImmunizationRecordModal = (props) => {
                 administeredBy: administeredBy,
                 nextDose: nextDose
             }
-            sendNewData(body, url, props, dispatch, userInfo, addImmunization)
+            sendNewData(body, immunizationURL, props, dispatch, userInfo, addImmunization)
         }   
     }
 

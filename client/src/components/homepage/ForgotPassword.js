@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux';
+import { forgotPasswordURL } from '../../config/configValues';
 
 const parentURL = '/';
 
@@ -51,12 +51,9 @@ export default function ForgotPassword() {
     const [ email, setEmail ] = useState('');
     const [successStatus, setSuccessStatus] = useState(true);
 
-	const userInfo = useSelector(state => state.userInfoReducer);
-	const dispatch = useDispatch();
-
 	const requestForgottenPasswordEmail = (event) => {
 		event.preventDefault()
-		const url = 'http://localhost:6000/users/forgot-password'
+
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json',
@@ -66,7 +63,7 @@ export default function ForgotPassword() {
             })
         }
 
-        fetch(url, requestOptions)
+        fetch(forgotPasswordURL, requestOptions)
             .then(async response => {
                 const data = await response.json();
 

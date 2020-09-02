@@ -17,7 +17,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { sendGET } from './modals/modal-api/ModalServerRequest';
-
+import {allergyURL} from '../../config/configValues';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -55,8 +55,7 @@ const AllergyList = (props) => {
     useEffect(() => {
         // Only fetch data if it hasn't already
         if(!initFlags.allergyFlag && props.config === 'user'){
-            const url = 'http://localhost:6000/allergies/'
-            sendGET(url, dispatch, userInfo, initAllergy, initAllergyFlag, setAllergyData)
+            sendGET(allergyURL, dispatch, userInfo, initAllergy, initAllergyFlag, setAllergyData)
         }
     }, []);
 

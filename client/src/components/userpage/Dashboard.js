@@ -133,7 +133,7 @@ export default function Dashboard() {
   };
   
   let urlPath = window.location.href.split('/');
-  console.log("url: ", urlPath)
+ 
   useEffect(() => {
 	if(urlPath[4] === 'profile'){
 		setProfile(true);

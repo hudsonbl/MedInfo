@@ -17,6 +17,7 @@ import Fade from '@material-ui/core/Fade';
 import DrugPrescriptionRow from './DrugPrescriptionRow'
 import {initDrug, initDrugFlag} from '../../cache/actions'
 import { sendGET } from './modals/modal-api/ModalServerRequest';
+import {prescriptionURL} from '../../config/configValues';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 // Component: Creates the dropdown table for Drug Prescriptions
 const DrugPrescriptionList = (props) => {
-    const [ querySuccess, checkQuery ] = useState(false)
+    // const [ querySuccess, checkQuery ] = useState(false)
     const initFlags = useSelector(state => state.initFlagsReducer);
     const userInfo = useSelector(state => state.userInfoReducer)
     const prescriptionDataRed = useSelector(state => state.prescriptionReducer)
@@ -55,8 +56,7 @@ const DrugPrescriptionList = (props) => {
     useEffect(() => {
         // Only fetch data if it hasn't already
         if(!initFlags.drugFlag && props.config === 'user'){
-            const url = 'http://localhost:6000/drug-prescription/'
-            sendGET(url, dispatch, userInfo, initDrug, initDrugFlag, setPrescriptionData)
+            sendGET(prescriptionURL, dispatch, userInfo, initDrug, initDrugFlag, setPrescriptionData)
         }
     }, [])
 

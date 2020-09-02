@@ -5,7 +5,8 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button'
 import { addAllergy, editAllergy, deleteAllergy } from '../../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
-import { sendEdit, sendNewData, sendDelete } from './modal-api/ModalServerRequest';
+import { sendEdit, sendNewData } from './modal-api/ModalServerRequest';
+import {allergyURL} from '../../../config/configValues';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,7 +39,6 @@ const AllergyModal = (props) => {
 
     const addNewData = (event) => {
         event.preventDefault()
-        const url = 'http://localhost:6000/allergies/'
 
         if(props.dataType === 'EDIT_DATA'){
             const body = {
@@ -47,14 +47,14 @@ const AllergyModal = (props) => {
                 medication: medication,
                 symptoms: symptom
             }
-            sendEdit(body, url, props, dispatch, userInfo, editAllergy)
+            sendEdit(body, allergyURL, props, dispatch, userInfo, editAllergy)
         }else if(props.dataType === 'NEW_DATA'){
             const body = {
                 allergy: allergy,
                 medication: medication,
                 symptoms: symptom
             }
-            sendNewData(body, url, props, dispatch, userInfo, addAllergy)
+            sendNewData(body, allergyURL, props, dispatch, userInfo, addAllergy)
         }
     }
 

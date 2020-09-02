@@ -9,6 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { addDrug, editDrug } from '../../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import { sendEdit, sendNewData } from './modal-api/ModalServerRequest';
+import {prescriptionURL} from '../../../config/configValues';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,8 +58,7 @@ const DrugPrescriptionModal = (props) => {
 
     const addNewData = (event) => {
         event.preventDefault()
-        console.log("Is it getting here?")
-        const url = 'http://localhost:6000/drug-prescription/'
+        
         if(props.dataType === 'EDIT_DATA'){
             const body = {
                 prescriptionId: props.prescription.prescriptionId,
@@ -67,7 +67,7 @@ const DrugPrescriptionModal = (props) => {
                 enddate: checkbox ? 'Currently Using' : enddate,
                 symptoms: symptoms
             }
-            sendEdit(body, url, props, dispatch, userInfo, editDrug)
+            sendEdit(body, prescriptionURL, props, dispatch, userInfo, editDrug)
         }else if(props.dataType === 'NEW_DATA'){
             const body = {
                 name: name,
@@ -75,7 +75,7 @@ const DrugPrescriptionModal = (props) => {
                 enddate: checkbox ? 'Currently Using' : enddate,
                 symptoms: symptoms
             }
-            sendNewData(body, url, props, dispatch, userInfo, addDrug)
+            sendNewData(body, prescriptionURL, props, dispatch, userInfo, addDrug)
         }   
     }
 

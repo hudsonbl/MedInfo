@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios'
 import { addProfileImage } from '../../cache/actions';
 import {useReactToPrint} from 'react-to-print';
+import { profileQRURL } from '../../config/configValues';
 
 const useStyles = makeStyles({
     root: {
@@ -54,7 +55,7 @@ const Profile = () => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:6000/users/user-info/profile/${userInfo.userId}`,
+            .get(`${profileQRURL}${userInfo.userId}`,
                 { responseType: 'arraybuffer' },
             )
             .then(response => {

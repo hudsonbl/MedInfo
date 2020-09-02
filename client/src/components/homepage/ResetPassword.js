@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
+import { resetPasswordURL } from '../../config/configValues';
 
 const parentURL = '/';
 
@@ -59,7 +60,7 @@ export default function ResetPassword() {
 
 	const handleResetPassword = (event) => {
 		event.preventDefault()
-		const url = 'http://localhost:6000/users/reset-password'
+
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ export default function ResetPassword() {
             })
         }
 
-        fetch(url, requestOptions)
+        fetch(resetPasswordURL, requestOptions)
             .then(async response => {
                 const data = await response.json();
 

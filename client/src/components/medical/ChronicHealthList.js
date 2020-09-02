@@ -18,6 +18,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
 import { sendGET } from './modals/modal-api/ModalServerRequest';
+import {chronicURL} from '../../config/configValues';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,8 +58,7 @@ const ChronicHealthList = (props) => {
     useEffect(() => {
         // Only fetch data if it hasn't already
         if(!initFlags.chronicFlag && props.config === 'user'){
-            const url = 'http://localhost:6000/chronic-health/'
-            sendGET(url, dispatch, userInfo, initChronic, initChronicFlag, setChronicData)
+            sendGET(chronicURL, dispatch, userInfo, initChronic, initChronicFlag, setChronicData)
         }
     }, [])
 

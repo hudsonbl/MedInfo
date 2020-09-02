@@ -14,6 +14,7 @@ import {loginUser} from '../../cache/actions';
 import {useSelector, useDispatch} from 'react-redux';
 import validator from 'email-validator'
 import Popover from '@material-ui/core/Popover';
+import { confirmationLoginURL, loginURL } from '../../config/configValues';
 
 
 const parentURL = '/';
@@ -70,10 +71,10 @@ export default function SignIn() {
 
 	const handleLogin = (event) => {
 		event.preventDefault()
-		let url = 'http://localhost:6000/users/login'
+		let url = loginURL
 		
 		if(hash !== undefined){
-			url = `http://localhost:6000/users/login/confirmation/${hash}`
+			url = `${confirmationLoginURL}${hash}`
 		}
 		console.log(hash)
         const requestOptions = {

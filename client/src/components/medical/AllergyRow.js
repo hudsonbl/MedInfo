@@ -9,15 +9,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteAllergy } from '../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import { sendDelete } from './modals/modal-api/ModalServerRequest'
-
+import {allergyURL} from '../../config/configValues';
 
 function AllergyRow(props) {
     const dispatch = useDispatch()
     const userInfo = useSelector(state => state.userInfoReducer);
 
     function deleteRow(){
-        const url = 'http://localhost:6000/allergies/'
-        sendDelete(props.allergy.allergyId, url, dispatch, userInfo, deleteAllergy)
+        sendDelete(props.allergy.allergyId, allergyURL, dispatch, userInfo, deleteAllergy)
     }
 
     return (

@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import {addDoctor, editDoctor} from '../../../cache/actions'
 import {useDispatch, useSelector} from 'react-redux'
 import { sendEdit, sendNewData } from './modal-api/ModalServerRequest';
+import {doctorURL} from '../../../config/configValues';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,8 +43,8 @@ const DoctorVisitModal = (props) => {
             setEdit(true)
             // Set modal values to be able to modify current values
             setDate(props.visit.date)
-            setClinicianName(props.visit.setClinicianName)
-            setNotes(props.visit.setClinicianName)
+            setClinicianName(props.visit.clinicianName)
+            setNotes(props.visit.notes)
             setBloodPressure(props.visit.bloodPressure)
             setHeartRate(props.visit.heartRate)
         }
@@ -51,8 +52,7 @@ const DoctorVisitModal = (props) => {
 
     const addNewData = (event) => {
         event.preventDefault()
-        console.log("Is it getting here?")
-        const url = 'http://localhost:6000/doctor-visit/'
+
         if(props.dataType === 'EDIT_DATA'){
             const body = {
                 visitId: props.visit.visitId,
@@ -62,7 +62,8 @@ const DoctorVisitModal = (props) => {
                 bloodPressure: bloodPressure,
                 heartRate: heartRate
             }
-            sendEdit(body, url, props, dispatch, userInfo, editDoctor)
+            console.log("=====================>",body)
+            sendEdit(body, doctorURL, props, dispatch, userInfo, editDoctor)
         }else if(props.dataType === 'NEW_DATA'){
             const body = {
                 date: date,
@@ -71,7 +72,7 @@ const DoctorVisitModal = (props) => {
                 bloodPressure: bloodPressure,
                 heartRate: heartRate
             }
-            sendNewData(body, url, props, dispatch, userInfo, addDoctor)
+            sendNewData(body, doctorURL, props, dispatch, userInfo, addDoctor)
         }   
     }
 

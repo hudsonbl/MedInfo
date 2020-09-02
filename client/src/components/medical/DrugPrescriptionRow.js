@@ -9,15 +9,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteDrug } from '../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import { sendDelete } from './modals/modal-api/ModalServerRequest'
-
+import {prescriptionURL} from '../../config/configValues';
 function DrugPrescriptionRow(props) {
     
     const dispatch = useDispatch()
     const userInfo = useSelector(state => state.userInfoReducer);
 
     function deleteRow(){
-        const url = 'http://localhost:6000/drug-prescription/'
-        sendDelete(props.prescription.prescriptionId, url, dispatch, userInfo, deleteDrug)
+        sendDelete(props.prescription.prescriptionId, prescriptionURL, dispatch, userInfo, deleteDrug)
     }
 
     return (

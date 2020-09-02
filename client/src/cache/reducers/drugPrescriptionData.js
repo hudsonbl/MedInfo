@@ -18,7 +18,7 @@ const drugPrescriptionData = (state = [], action) => {
                 }
             }
             return state;
-        case 'ALLERGY_DATA_DELETE':
+        case 'DRUG_DATA_DELETE':
             var newState = [];
             for(var i = 0; i < state.length; i++){
                 if(state[i].prescriptionId === action.prescriptionId){

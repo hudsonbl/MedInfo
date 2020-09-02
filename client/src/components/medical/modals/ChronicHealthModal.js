@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button'
 import {addChronic, editChronic} from '../../../cache/actions'
 import {useDispatch, useSelector} from 'react-redux'
 import { sendEdit, sendNewData } from './modal-api/ModalServerRequest';
-
+import {chronicURL} from '../../../config/configValues';
 const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
@@ -38,21 +38,20 @@ const ChronicHealthModal = (props) => {
 
     const addNewData = (event) => {
         event.preventDefault()
-        console.log("Is it getting here?")
-        const url = 'http://localhost:6000/chronic-health/'
+    
         if(props.dataType === 'EDIT_DATA'){
             const body = {
                 chronicId: props.health.chronicId,
                 condition: condition,
                 notes: notes
             }
-            sendEdit(body, url, props, dispatch, userInfo, editChronic)
+            sendEdit(body, chronicURL, props, dispatch, userInfo, editChronic)
         }else if(props.dataType === 'NEW_DATA'){
             const body = {
                 condition: condition,
                 notes: notes,
             }
-            sendNewData(body, url, props, dispatch, userInfo, addChronic)
+            sendNewData(body, chronicURL, props, dispatch, userInfo, addChronic)
         }   
     }
 

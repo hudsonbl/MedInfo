@@ -9,14 +9,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteChronic } from '../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import { sendDelete } from './modals/modal-api/ModalServerRequest'
+import {chronicURL} from '../../config/configValues';
 
 function ChronicHealthRow(props) {
     const dispatch = useDispatch()
     const userInfo = useSelector(state => state.userInfoReducer);
 
     function deleteRow(){
-        const url = 'http://localhost:6000/chronic-health/'
-        sendDelete(props.health.chronicId, url, dispatch, userInfo, deleteChronic)
+        sendDelete(props.health.chronicId, chronicURL, dispatch, userInfo, deleteChronic)
     }
 
     return (

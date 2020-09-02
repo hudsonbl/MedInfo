@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import { addHospital, editHospital } from '../../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import { sendEdit, sendNewData } from './modal-api/ModalServerRequest';
+import {hospitalURL} from '../../../config/configValues';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,8 +49,7 @@ const HospitalVisitModal = (props) => {
 
     const addNewData = (event) => {
         event.preventDefault()
-        console.log("Is it getting here?")
-        const url = 'http://localhost:6000/hospital-visit/'
+        
         if(props.dataType === 'EDIT_DATA'){
             const body = {
                 visitId: props.visit.visitId,
@@ -57,16 +57,14 @@ const HospitalVisitModal = (props) => {
                 clinicianName: clinicianName,
                 notes: notes
             }
-            console.log("This data: ", body)
-            sendEdit(body, url, props, dispatch, userInfo, editHospital)
+            sendEdit(body, hospitalURL, props, dispatch, userInfo, editHospital)
         }else if(props.dataType === 'NEW_DATA'){
             const body = {
                 date: date,
                 clinicianName: clinicianName,
                 notes: notes
             }
-            console.log("This data: ", body)
-            sendNewData(body, url, props, dispatch, userInfo, addHospital)
+            sendNewData(body, hospitalURL, props, dispatch, userInfo, addHospital)
         }   
     }
 

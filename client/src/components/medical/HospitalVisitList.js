@@ -17,6 +17,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { sendGET } from './modals/modal-api/ModalServerRequest';
+import {hospitalURL} from '../../config/configValues';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -54,8 +55,7 @@ const HospitalVisitList = (props) => {
     useEffect(() => {
         // Only fetch data if it hasn't already
         if(!initFlags.hospitalFlag && props.config === 'user'){
-            const url = 'http://localhost:6000/hospital-visit/'
-            sendGET(url, dispatch, userInfo, initHospital, initHospitalFlag, setHospitalVisitData)
+            sendGET(hospitalURL, dispatch, userInfo, initHospital, initHospitalFlag, setHospitalVisitData)
         }
     }, []);
 

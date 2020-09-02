@@ -18,7 +18,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import HomeIcon from '@material-ui/icons/Home';
-import axios from 'axios'
+import {firstResponderURL} from '../../config/configValues';
 
 const parentURL = '/';
 
@@ -167,7 +167,7 @@ const useOtherStyles = makeStyles({
 function AllergyTable(props) {
     const classes = useOtherStyles();
     const [allergyData, setAllergyData ] = useState([])
-	console.log("Props: ", props);
+	
     useEffect(() => {
 		const requestOptions = {
             method: 'GET',
@@ -177,7 +177,7 @@ function AllergyTable(props) {
             }
         }
         
-        fetch(`http://localhost:6000/first-responder/${props.uuId}`, requestOptions)
+        fetch(`${firstResponderURL}${props.uuId}`, requestOptions)
             .then(async response => {
                 const data = await response.json();
 
@@ -195,7 +195,6 @@ function AllergyTable(props) {
             });
     }, []);
 
-    console.log("Alergy data:", allergyData)
     return (
         <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">

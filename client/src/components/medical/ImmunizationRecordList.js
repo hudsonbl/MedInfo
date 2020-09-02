@@ -17,6 +17,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
 import { sendGET } from './modals/modal-api/ModalServerRequest';
+import {immunizationURL} from '../../config/configValues';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,8 +56,7 @@ const ImmunizationRecordList = (props) => {
     useEffect(() => {
         // Only fetch data if it hasn't already
         if(!initFlags.immunizationFlag && props.config === 'user'){
-            const url = 'http://localhost:6000/immunization-record/'
-            sendGET(url, dispatch, userInfo, initImmunization, initImmunizationFlag, setImmunizationData)
+            sendGET(immunizationURL, dispatch, userInfo, initImmunization, initImmunizationFlag, setImmunizationData)
         }
     }, [])
 

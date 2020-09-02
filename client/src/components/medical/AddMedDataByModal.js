@@ -82,27 +82,20 @@ export default AddMedDataByModal
 function selectInfoItem(props, callback){
     switch (props.item) {
         case 'Allergies':
-            console.log("Button: ", props.item);
             return (<AllergyModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Doctor Visits':
-            console.log("Button: ", props.item);
             return (<DoctorVisitModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Chronic Health Issues':
-            console.log("Button: ", props.item);
             return (<ChronicHealthModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Drug Prescriptions':
-            console.log("Button: ", props.item);
             return (<DrugPrescriptionModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Hospital Visits':
-            console.log("Button: ", props.item);
             return (<HospitalVisitModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Immunization Records':
-            console.log("Button: ", props.item);
             return (<ImmunizationRecordModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Lab Reports':
-            console.log("Button: ", props.item);
             return (<LabReportModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         default:
-            console.log("error");
+            
     }
 }

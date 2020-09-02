@@ -9,15 +9,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteImmunization } from '../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import { sendDelete } from './modals/modal-api/ModalServerRequest'
-
+import {immunizationURL} from '../../config/configValues';
 function ImmunizationRecordRow(props) {
 
     const dispatch = useDispatch()
     const userInfo = useSelector(state => state.userInfoReducer);
 
     function deleteRow(){
-        const url = 'http://localhost:6000/immunization-record/'
-        sendDelete(props.record.recordId, url, dispatch, userInfo, deleteImmunization)
+        sendDelete(props.record.recordId, immunizationURL, dispatch, userInfo, deleteImmunization)
     }
 
     return (
