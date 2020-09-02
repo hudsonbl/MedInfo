@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ChronicHealthModal = (props) => {
     const [ edit, setEdit ] = useState(false)
-    const [ querySuccess, checkQuery ] = useState(false)
+    // const [ querySuccess, checkQuery ] = useState(false)
     const [ condition, setCondition ] = useState('')
     const [ notes, setNotes ] = useState('')
     

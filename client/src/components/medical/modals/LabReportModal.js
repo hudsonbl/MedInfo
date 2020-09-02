@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LabReportModal = (props) => {
-    const [ querySuccess, checkQuery ] = useState(false)
     const [ name, setName ] = useState('')
     const [ filetype, setFileType ] = useState('')
     const [ filepath, setFilePath ] = useState('')

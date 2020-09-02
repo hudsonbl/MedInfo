@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DrugPrescriptionModal = (props) => {
     const [ edit, setEdit ] = useState(false)
-    const [ querySuccess, checkQuery ] = useState(false)
+    // const [ querySuccess, checkQuery ] = useState(false)
     const [ name, setName ] = useState('')
     const [ startdate, setStartDate ] = useState('')
     const [ enddate, setEndDate ] = useState('')

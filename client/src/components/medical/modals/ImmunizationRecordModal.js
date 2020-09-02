@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ImmunizationRecordModal = (props) => {
     const [ edit, setEdit ] = useState(false)
-    const [ querySuccess, checkQuery ] = useState(false)
+    // const [ querySuccess, checkQuery ] = useState(false)
     const [ vaccine, setVaccine ] = useState('')
     const [ dateGiven, setDateGiven ] = useState('')
     const [ administeredBy, setAdministeredBy ] = useState('')

@@ -38,11 +38,9 @@ const AllergyModal = (props) => {
 
     const addNewData = (event) => {
         event.preventDefault()
-        console.log("Is it getting here?")
         const url = 'http://localhost:6000/allergies/'
 
         if(props.dataType === 'EDIT_DATA'){
-            console.log("WORK HERE??? +++ ", props.allergy.allergyId)
             const body = {
                 allergyId: props.allergy.allergyId,
                 allergy: allergy,

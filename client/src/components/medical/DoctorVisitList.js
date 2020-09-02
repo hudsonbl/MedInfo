@@ -17,6 +17,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
+import { sendGET } from './modals/modal-api/ModalServerRequest';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -55,32 +56,8 @@ const DoctorVisitList = (props) => {
     useEffect(() => {
         // Only fetch data if it hasn't already
         if(!initFlags.doctorFlag && props.config === 'user'){
-            const requestOptions = {
-                method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userInfo.bearerToken}`,
-                    'accept': 'application/json'
-                }
-            }
-
-            fetch(`http://localhost:6000/doctor-visit/${userInfo.userId}`, requestOptions)
-                .then(async response => {
-                    const data = await response.json();
-
-                    if(!response.ok) {
-                        const error = (data && data.message) || response.status;
-                        return Promise.reject(error);
-                    }
-                    if(data.successStatus){
-                        dispatch(initDoctor(data.visits))
-                        dispatch(initDoctorFlag())
-                        setDoctorData(data.visits)
-                    }
-                })
-                .catch(error => {
-                    console.log("==error: ", error.errorMessage)
-                });
+            const url = 'http://localhost:6000/doctor-visit/'
+            sendGET(url, dispatch, userInfo, initDoctor, initDoctorFlag, setDoctorData)
         }
     }, [])
 

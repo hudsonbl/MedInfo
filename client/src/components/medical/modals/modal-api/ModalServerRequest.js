@@ -22,7 +22,6 @@ function sendNewData(body, url, props, dispatch, userInfo, addDataCallback) {
             // Upon a successful insert to db. Modal closes and data is propageted upwards and around to {MedInfoItem}List.js components
             if(data.successStatus){
                 console.log("Adding ");
-                const {id, status} = data
                 body[Object.keys(data)[0]] = data[Object.keys(data)[0]]
                 dispatch(addDataCallback(body));
                 props.handleClose();
@@ -95,3 +94,38 @@ const sendDelete = (itemId, url, dispatch, userInfo, deleteDataCallback) => {
         });  
 }
 exports.sendDelete = sendDelete;
+
+const sendGET = (url, dispatch, userInfo, initData, initFlag, setData) => {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userInfo.bearerToken}`,
+            'accept': 'application/json'
+        }
+    };
+
+    fetch(`${url}${userInfo.userId}`, requestOptions)
+        .then(async response => {
+            const data = await response.json();
+
+            if(!response.ok) {
+                const error = (data && data.message) || response.status;
+                return Promise.reject(error);
+            }
+
+            // Upon a successful insert to db. Modal closes and data is propageted upwards and around to {MedInfoItem}List.js components
+            if(data.successStatus){
+                // Initialize data in Redux
+                dispatch(initData(data[Object.keys(data)[0]]));
+                dispatch(initFlag())
+
+                // Set data in <calling function>list.js hook states
+                setData(data[Object.keys(data)[0]])
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        });  
+}
+exports.sendGET = sendGET;

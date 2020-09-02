@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DoctorVisitModal = (props) => {
     const [ edit, setEdit ] = useState(false)
-    const [ querySuccess, checkQuery ] = useState(false)
+    // const [ querySuccess, checkQuery ] = useState(false)
     const [ date, setDate ] = useState('')
     const [ clinicianName, setClinicianName ] = useState('')
     const [ notes, setNotes ] = useState('')

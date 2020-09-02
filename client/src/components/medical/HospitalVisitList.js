@@ -16,6 +16,7 @@ import HospitalVisitModal from './modals/HospitalVisitModal';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import { sendGET } from './modals/modal-api/ModalServerRequest';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -53,33 +54,8 @@ const HospitalVisitList = (props) => {
     useEffect(() => {
         // Only fetch data if it hasn't already
         if(!initFlags.hospitalFlag && props.config === 'user'){
-            const requestOptions = {
-                method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userInfo.bearerToken}`,
-                    'accept': 'application/json'
-                }
-            }
-            
-            fetch(`http://localhost:6000/hospital-visit/${userInfo.userId}`, requestOptions)
-                .then(async response => {
-                    const data = await response.json();
-    
-                    if(!response.ok) {
-                        const error = (data && data.message) || response.status;
-                        return Promise.reject(error);
-                    }
-                    if(data.successStatus){
-                        console.log("==Data: ", data)
-                        dispatch(initHospital(data.visits))
-                        dispatch(initHospitalFlag())
-                        setHospitalVisitData(data.visits)
-                    }
-                })
-                .catch(error => {
-                    console.log("==error: ", error.errorMessage)
-                });
+            const url = 'http://localhost:6000/hospital-visit/'
+            sendGET(url, dispatch, userInfo, initHospital, initHospitalFlag, setHospitalVisitData)
         }
     }, []);
 
@@ -118,7 +94,7 @@ const HospitalVisitList = (props) => {
                 </TableHead>
                 <TableBody>
                     {/* Create each row for hospital visit data */}
-                    {hospitalVisitData !== undefined && props.config === 'user'? hospitalVisitData.map(visit => 
+                    {hospitalVisitData !== undefined && props.config === 'user' ? hospitalVisitData.map(visit => 
                         <HospitalVisitRow key={visit.visitId} visit={visit} handleOpen={handleOpen} handleClose={handleClose}/>
                     ) : ''}
                 </TableBody>

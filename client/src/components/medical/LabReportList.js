@@ -1,4 +1,4 @@
-import React , {useState, useEffect } from 'react' 
+import React , { useEffect } from 'react' 
 import {
     TableContainer,
     TableBody,
@@ -15,7 +15,6 @@ import LabReportRow from './LabReportRow'
 // TODO: This will deal with file types in the future. User may request to access or download a file ex: pdf, x-ray.jpg what ever
 // Component: Creates the dropdown table for Lab Reports    
 const LabReportList = () => {
-    const [ querySuccess, checkQuery ] = useState(false)
 
     const userInfo = useSelector(state => state.userInfoReducer)
     const labReportData = useSelector(state => state.labReportReducer)

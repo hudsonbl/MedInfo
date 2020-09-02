@@ -17,6 +17,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
+import { sendGET } from './modals/modal-api/ModalServerRequest';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,34 +57,8 @@ const ChronicHealthList = (props) => {
     useEffect(() => {
         // Only fetch data if it hasn't already
         if(!initFlags.chronicFlag && props.config === 'user'){
-            const requestOptions = {
-                method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userInfo.bearerToken}`,
-                    'accept': 'application/json'
-                }
-            }
-    
-            fetch(`http://localhost:6000/chronic-health/${userInfo.userId}`, requestOptions)
-                .then(async response => {
-                    const data = await response.json();
-    
-                    if(!response.ok) {
-                        const error = (data && data.message) || response.status;
-                        return Promise.reject(error);
-                    }
-                    
-                    if(data.successStatus){
-                        console.log("==Data: ", data)
-                        dispatch(initChronic(data.health))
-                        dispatch(initChronicFlag())
-                        setChronicData(data.health)
-                    }
-                })
-                .catch(error => {
-                    console.log("==error: ", error.errorMessage)
-                });
+            const url = 'http://localhost:6000/chronic-health/'
+            sendGET(url, dispatch, userInfo, initChronic, initChronicFlag, setChronicData)
         }
     }, [])
 

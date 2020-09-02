@@ -24,7 +24,7 @@ async function requireAuthentication(req, res, next){
     
     // Get user role is very important for what data privildge user has access to
     try {
-        console.log(" ==--==--==--==--= User ID of user ->", req.params);
+        console.log(" == User ID of user ->", req.params);
         const user = await getUserById(req.params.id);
         const payload = jwt.verify(token, secretKey);
         req.user = payload.sub;

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const HospitalVisitModal = (props) => {
     const [ edit, setEdit ] = useState(false)
-    const [ querySuccess, checkQuery ] = useState(false)
+    // const [ querySuccess, checkQuery ] = useState(false)
     const [ date, setDate ] = useState('')
     const [ clinicianName, setClinicianName ] = useState('')
     const [ notes, setNotes ] = useState('')
@@ -57,6 +57,7 @@ const HospitalVisitModal = (props) => {
                 clinicianName: clinicianName,
                 notes: notes
             }
+            console.log("This data: ", body)
             sendEdit(body, url, props, dispatch, userInfo, editHospital)
         }else if(props.dataType === 'NEW_DATA'){
             const body = {
@@ -64,6 +65,7 @@ const HospitalVisitModal = (props) => {
                 clinicianName: clinicianName,
                 notes: notes
             }
+            console.log("This data: ", body)
             sendNewData(body, url, props, dispatch, userInfo, addHospital)
         }   
     }
@@ -86,6 +88,7 @@ const HospitalVisitModal = (props) => {
                     />
                     <TextField
                         name="clinicianName"
+                        onChange={e => setClinicianName(e.target.value)}
                         id="outlined-textarea"
                         label="Doctor Visited"
                         placeholder="Placeholder"
@@ -96,6 +99,7 @@ const HospitalVisitModal = (props) => {
                     />
                     <TextField
                         name="notes"
+                        onChange={e => setNotes(e.target.value)}
                         id="outlined-multiline-static"
                         label="Notes"
                         multiline

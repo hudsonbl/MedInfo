@@ -45,6 +45,7 @@ router.get('/:id', requireAuthentication, async(req, res) => {
         }
     } else {
         debug("-- Getting hospital visit failed unauthenticated user");
+        console.log("Not authenticating for some reason")
         res.status(400).send({
             errorMessage: "Unauthenticated user",
             successStatus: false 
