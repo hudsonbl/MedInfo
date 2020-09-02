@@ -155,10 +155,10 @@ router.patch('/:id', requireAuthentication, async (req, res) => {
 // ==========  DELETE allergies ============
 // =========================================
 
-router.delete('/:userId/:allergyId', requireAuthentication, async (req, res) => {
+router.delete('/:id/:allergyId', requireAuthentication, async (req, res) => {
     // Get the user and allergy id from uri
     const ids = {
-        userId: parseInt(req.params.userId),
+        userId: parseInt(req.params.id),
         allergyId: parseInt(req.params.allergyId)
     };
     // TODO: Check user authentication 

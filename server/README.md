@@ -1,5 +1,10 @@
 # Everything I learned so far
 
+### Blog idea for back end
+Write about what goes into the back end server that you've done. Ex: authentication, rate limiting, caching, connecting to a database, file transfers over http 
+(Last thing add logging a way to monitor the system)
+
+
 ## Proxies 
 Reverse and forward proxies. Clients may sometimes use something thats called a forward proxy. A forward proxy bounces a clients request from another 
 machine to the server. The server sees a incoming request from the source of the forward proxies IP address. A reverse client is used for the opposite

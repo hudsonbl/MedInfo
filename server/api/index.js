@@ -9,7 +9,7 @@ router.use('/drug-prescription', require('./drugPrescriptions'));
 router.use('/first-responder', require('./firstResponder'));
 router.use('/hospital-visit', require('./hospitalVisit'));
 router.use('/immunization-record', require('./immunizationRecords'));
-router.use('/lab-reports', require('./labReports'));
+// router.use('/lab-reports', require('./labReports'));
 router.use('/users', require('./users'));
 
 module.exports = router;

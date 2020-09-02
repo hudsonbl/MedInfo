@@ -1,3 +1,5 @@
 # Ignore node modules. It is downloadable content from platform to platform.
 client/node_modules/
 server/node_modules/
+server/.env
+server/files

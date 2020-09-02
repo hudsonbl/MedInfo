@@ -112,7 +112,7 @@ router.patch('/:id', requireAuthentication, async (req, res) => {
     // Get user id and extract request body
     req.body.userId = parseInt(req.params.id);
     const body = extractValidFields(req.body, ChronicHealthPatchSchema);
-    
+
     // Check if request body is valid
     if(validateAgainstSchema(body, ChronicHealthPatchSchema)) {
         // Validate authenticated user
@@ -155,10 +155,10 @@ router.patch('/:id', requireAuthentication, async (req, res) => {
 // =====  DELETE chronic health issue ======
 // =========================================
 
-router.delete('/:userId/:chronicId', requireAuthentication, async (req, res) => {
+router.delete('/:id/:chronicId', requireAuthentication, async (req, res) => {
     // Get the user and chronic health id from uri
     const ids = {
-        userId: parseInt(req.params.userId),
+        userId: parseInt(req.params.id),
         chronicId: parseInt(req.params.chronicId)
     };
     // TODO: Check user authentication 

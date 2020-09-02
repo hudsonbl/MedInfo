@@ -4,7 +4,7 @@ const api = require('./api');
 const cors = require('cors');
 const {debug} = require('./lib/debug');
 const app = express();
-const {metrics} = require('./lib/exporter');
+const {applyRateLimit} = require('./lib/redis');
 const port = process.env.PORT || 6000;
 
 //app.use(metrics);
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(morgan('dev'));
 
-
+app.use(applyRateLimit);
 app.use('/', api);
 
 app.use('*', (req, res) => {

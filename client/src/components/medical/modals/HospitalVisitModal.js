@@ -1,11 +1,11 @@
-import React , {useState, useEffect } from 'react' 
+import React , { useState, useEffect } from 'react' 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button'
-import axios from 'axios';
-import { addHospital } from '../../../cache/actions';
+import { addHospital, editHospital } from '../../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
+import { sendEdit, sendNewData } from './modal-api/ModalServerRequest';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,56 +17,55 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HospitalVisitModal = (props) => {
+    const [ edit, setEdit ] = useState(false)
     const [ querySuccess, checkQuery ] = useState(false)
     const [ date, setDate ] = useState('')
     const [ clinicianName, setClinicianName ] = useState('')
     const [ notes, setNotes ] = useState('')
+    const [ today, setToday ] = useState('')
     
     const classes = useStyles()
 
     const userInfo = useSelector(state => state.userInfoReducer)
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if(props.dataType === 'EDIT_DATA'){
+            setEdit(true)
+            // Set modal values to be able to modify current values
+            setDate(props.visit.date)
+            setClinicianName(props.visit.clinicianName)
+            setNotes(props.visit.notes)
+        }
+
+        var d = new Date()
+        var dd = String(d.getDate()).padStart(2, '0');
+        var mm = String(d.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = d.getFullYear();
+
+        setToday(mm + '-' + dd + '-' + yyyy)
+    }, [])
+
     const addNewData = (event) => {
         event.preventDefault()
-
-        const requestOptions = {
-            method: 'POST',
-            headers: {  'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${userInfo.bearerToken}`,
-                        'accept': 'application/json'},
-            body: JSON.stringify({
+        console.log("Is it getting here?")
+        const url = 'http://localhost:6000/hospital-visit/'
+        if(props.dataType === 'EDIT_DATA'){
+            const body = {
+                visitId: props.visit.visitId,
                 date: date,
                 clinicianName: clinicianName,
                 notes: notes
-            })
-        }
-    
-        fetch(`http://localhost:6000/hospital-visit/${userInfo.userId}`, requestOptions)
-            .then(async response => {
-                const data = await response.json();
-    
-                if(!response.ok) {
-                    const error = (data && data.message) || response.status;
-                    return Promise.reject(error);
-                }
-    
-                // Upon a successful insert to db. Modal closes and data is propageted upwards and around to {MedInfoItem}List.js components
-                if(data.successStatus){
-                    console.log("Successful shit")
-                    const body = {
-                        visitId: data.visitId,
-                        date: date,
-                        clinicianName: clinicianName,
-                        notes: notes
-                    }
-                    dispatch(addHospital(body))
-                    props.handleClose();
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            });
+            }
+            sendEdit(body, url, props, dispatch, userInfo, editHospital)
+        }else if(props.dataType === 'NEW_DATA'){
+            const body = {
+                date: date,
+                clinicianName: clinicianName,
+                notes: notes
+            }
+            sendNewData(body, url, props, dispatch, userInfo, addHospital)
+        }   
     }
 
     return (
@@ -79,7 +78,7 @@ const HospitalVisitModal = (props) => {
                         id="date"
                         label="Date Visited"
                         type="date"
-                        defaultValue="2017-05-24"
+                        defaultValue={edit ? props.visit.date : today}
                         className={classes.textField}
                         InputLabelProps={{
                         shrink: true,
@@ -92,7 +91,8 @@ const HospitalVisitModal = (props) => {
                         placeholder="Placeholder"
                         multiline
                         variant="outlined"
-                        onChange={e => setClinicianName(e.target.value)}
+                        defaultValue={edit ? props.visit.clinicianName : ''}
+                        inputProps={{ maxLength: 100 }}
                     />
                     <TextField
                         name="notes"
@@ -101,7 +101,8 @@ const HospitalVisitModal = (props) => {
                         multiline
                         rows={4}
                         variant="outlined"
-                        onChange={e => setNotes(e.target.value)}
+                        defaultValue={edit ? props.visit.notes : ''}
+                        inputProps={{ maxLength: 255 }}
                     />
                 </div>
                 <Button variant="contained" color="primary" onClick={addNewData}>

@@ -22,20 +22,13 @@ import HomePage from './Dashboard'
 import Login from './Login'
 import CreateUser from './CreateUser'
 import {logoutUser} from '../../cache/actions'
-import {useDispatch} from 'react-redux'
-const mainListItems = () => {
 
-  return (
-    <div>
-      <Link href='/'>
-      <ListItem button>
-        <ListItemIcon>
-          <HomeIcon/>
-        </ListItemIcon>
-        <ListItemText primary="Home"/>
-      </ListItem>
-      </Link>
-      <Link href='/login'>
+import {profileLink, medInfoLink} from '../userpage/listItems'
+
+
+const loginLink = (
+  <div>
+    <Link color="inherit" style={{ textDecoration: 'none' }} href='/login'>
       <ListItem button>
         <ListItemIcon>
           <ExitToAppIcon />
@@ -43,7 +36,27 @@ const mainListItems = () => {
         <ListItemText primary="Login"/>
       </ListItem>
       </Link>
-      <Link href='/users'>
+  </div>
+);
+
+const SignOutLink = (props) => {
+  return (
+    <div>
+      <Link color="inherit" style={{ textDecoration: 'none' }} href='/' onClick={props.logoutUser}>
+        <ListItem button>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="Sign Out"/>
+        </ListItem>
+      </Link>
+    </div>
+  )
+} 
+
+const createUserLink = (
+  <div>
+    <Link color="inherit" style={{ textDecoration: 'none' }} href='/users'>
       <ListItem button>
         <ListItemIcon>
           <PersonAddIcon />
@@ -51,6 +64,31 @@ const mainListItems = () => {
         <ListItemText primary="Create New User" />
       </ListItem>
       </Link>
+  </div>
+)
+
+const mainListItems = (props) => {
+ 
+  return (
+    <div>
+      <Link color="inherit" style={{ textDecoration: 'none' }} href='/'>
+      <ListItem button>
+        <ListItemIcon>
+          <HomeIcon/>
+        </ListItemIcon>
+        <ListItemText primary="Home"/>
+      </ListItem>
+      </Link>
+      {props.isLoggedIn ? <div> 
+                                {profileLink}
+                                {medInfoLink}
+                                <SignOutLink logoutUser={props.setLogout} />
+                             </div> :
+                             <div> 
+                               {loginLink}
+                               {createUserLink}
+                             </div>
+      }
     </div>
   );
 } 

@@ -1,11 +1,14 @@
-import React , {useState, useEffect } from 'react' 
+import React , { useState, useEffect } from 'react' 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button'
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
-import { addDrug } from '../../../cache/actions';
+import { addDrug, editDrug } from '../../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
+import { sendEdit, sendNewData } from './modal-api/ModalServerRequest';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,59 +20,67 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DrugPrescriptionModal = (props) => {
+    const [ edit, setEdit ] = useState(false)
     const [ querySuccess, checkQuery ] = useState(false)
     const [ name, setName ] = useState('')
     const [ startdate, setStartDate ] = useState('')
     const [ enddate, setEndDate ] = useState('')
     const [ symptoms, setSymptom ] = useState('')
+    const [ checkbox, setCheckbox] = useState(false)
+    const [ today, setToday ] = useState('')
+    
 
     const classes = useStyles()
 
     const userInfo = useSelector(state => state.userInfoReducer)
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if(props.dataType === 'EDIT_DATA'){
+            setEdit(true)
+            // Set modal values to be able to modify current values
+            setName(props.prescription.name)
+            setStartDate(props.prescription.startdate)
+            setEndDate(props.prescription.enddate)
+            setSymptom(props.prescription.symptoms)
+            if(props.prescription.enddate === 'Currently Using'){
+                setCheckbox(true)
+            }
+        }
+        var d = new Date()
+        var dd = String(d.getDate()).padStart(2, '0');
+        var mm = String(d.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = d.getFullYear();
+
+        setToday(mm + '-' + dd + '-' + yyyy)
+    }, [])
+
     const addNewData = (event) => {
         event.preventDefault()
-
-        const requestOptions = {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${userInfo.bearerToken}`,
-                      'accept': 'application/json'},
-            body: JSON.stringify({
+        console.log("Is it getting here?")
+        const url = 'http://localhost:6000/drug-prescription/'
+        if(props.dataType === 'EDIT_DATA'){
+            const body = {
+                prescriptionId: props.prescription.prescriptionId,
                 name: name,
                 startdate: startdate,
-                enddate: enddate,
+                enddate: checkbox ? 'Currently Using' : enddate,
                 symptoms: symptoms
-            })
-        }
+            }
+            sendEdit(body, url, props, dispatch, userInfo, editDrug)
+        }else if(props.dataType === 'NEW_DATA'){
+            const body = {
+                name: name,
+                startdate: startdate,
+                enddate: checkbox ? 'Currently Using' : enddate,
+                symptoms: symptoms
+            }
+            sendNewData(body, url, props, dispatch, userInfo, addDrug)
+        }   
+    }
 
-        fetch(`http://localhost:6000/drug-prescription/${userInfo.userId}`, requestOptions)
-            .then(async response => {
-                const data = await response.json();
-
-                if(!response.ok) {
-                    const error = (data && data.message) || response.status;
-                    return Promise.reject(error);
-                }
-
-                // Upon a successful insert to db. Modal closes and data is propageted upwards and around to {MedInfoItem}List.js components
-                if(data.successStatus == true){
-                    console.log("Successful shit")
-                    const body = {
-                        prescriptionId: data.prescriptionId,
-                        name: name,
-                        startdate: startdate,
-                        enddate: enddate,
-                        symptoms: symptoms
-                    }
-                    dispatch(addDrug(body))
-                    props.handleClose();
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            })
+    const toggleCheckbox = () => {
+        setCheckbox(!checkbox)
     }
 
     return (
@@ -83,7 +94,9 @@ const DrugPrescriptionModal = (props) => {
                         placeholder="Placeholder"
                         multiline
                         variant="outlined"
+                        defaultValue={edit ? props.prescription.name : ''}
                         onChange={e => setName(e.target.value)}
+                        inputProps={{ maxLength: 100 }}
                     />
                     <TextField
                         name="startdate"
@@ -91,24 +104,34 @@ const DrugPrescriptionModal = (props) => {
                         id="date"
                         label="Date Started"
                         type="date"
-                        defaultValue="2017-05-24"
+                        defaultValue={edit ? props.prescription.startdate : today}
                         className={classes.textField}
                         InputLabelProps={{
                         shrink: true,
                         }}
                     />
-                    <TextField
+                    <FormControlLabel 
+                        value="female" 
+                        control={<Checkbox
+                                onChange={toggleCheckbox}
+                                checked={checkbox}
+                                color="primary"
+                                inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            />} 
+                        label="Currently Using" />
+                    
+                    {checkbox ? '' : <TextField
                         name="enddate"
                         onChange={e => setEndDate(e.target.value)}
                         id="date"
                         label="Date Stopped"
                         type="date"
-                        defaultValue="2017-05-24"
+                        defaultValue={edit ? props.prescription.enddate : today}
                         className={classes.textField}
                         InputLabelProps={{
                         shrink: true,
                         }}
-                    />
+                    />}
                     <TextField
                         name="symptoms"
                         id="outlined-multiline-static"
@@ -116,7 +139,9 @@ const DrugPrescriptionModal = (props) => {
                         multiline
                         rows={4}
                         variant="outlined"
+                        defaultValue={edit ? props.prescription.symptoms : ''}
                         onChange={e => setSymptom(e.target.value)}
+                        inputProps={{ maxLength: 255 }}
                     />
                 </div>
                 <Button variant="contained" color="primary" onClick={addNewData}>

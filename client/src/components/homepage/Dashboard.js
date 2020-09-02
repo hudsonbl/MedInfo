@@ -1,4 +1,4 @@
-import React , {useState, useEffect } from 'react' 
+import React from 'react' 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,36 +10,32 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MainListItems from './ListItems';
-import WelcomScreen from './WelcomScreen';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import {logoutUser} from '../../cache/actions'
-import {useDispatch} from 'react-redux'
 
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import {logoutUser} from '../../cache/actions'
+import {useDispatch , useSelector} from 'react-redux'
+
+const parentURL = '/';
+
 function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        MedInfo
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
+	return (
+		<Typography variant="body2" color="textSecondary" align="center">
+			{'Trademark '}
+		<Link color="inherit" href={parentURL} to={parentURL}>
+		  	FastMedInfo
+		</Link>{' '}
+			{new Date().getFullYear()}
+			{'.'}
+	  	</Typography>
+	);
 }
+
 
 const drawerWidth = 240;
 
@@ -122,11 +118,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
-  const dispatch = useDispatch();
+  const userInfo = useSelector(state => state.userInfoReducer)
+  const dispatch = useDispatch()
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -136,6 +133,10 @@ export default function Dashboard() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  const setLogout = () => {
+    dispatch(logoutUser())
+  }
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -151,23 +152,8 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            MedInfo
+            Fast MedInfo
           </Typography>
-          <IconButton color="inherit" onClick={() => <Link to='/login'/>}>
-            <Badge badgeContent={0} color="secondary">
-              <ExitToAppIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit" onClick={() => <Link to='/users'/>}>
-            <Badge badgeContent={0} color="secondary">
-              <PersonAddIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit" onClick={() => logoutUser()}>
-            <Badge badgeContent={0} color="secondary">
-              <PersonAddIcon />
-            </Badge>
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -184,7 +170,7 @@ export default function Dashboard() {
         </div>
         <Divider />
         <List>
-          <MainListItems />
+          <MainListItems isLoggedIn={userInfo.isLoggedIn} setLogout={setLogout}/>
         </List>
       </Drawer>
       <main className={classes.content}>
@@ -193,9 +179,7 @@ export default function Dashboard() {
           {/*This contians the home page welcome screen*/}
           <Grid container spacing={3}>
               <Grid item xs={12}>
-                <Paper className={fixedHeightPaper}>
-                  <WelcomScreen />
-                </Paper>
+                  <props.page />
               </Grid>
             </Grid>
           <Box pt={4}>

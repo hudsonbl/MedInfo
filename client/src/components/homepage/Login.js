@@ -3,25 +3,27 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {loginUser} from '../../cache/actions';
 import {useSelector, useDispatch} from 'react-redux';
-import axios from 'axios';
+import validator from 'email-validator'
+import Popover from '@material-ui/core/Popover';
+
+
+const parentURL = '/';
 
 function Copyright() {
 	return (
 		<Typography variant="body2" color="textSecondary" align="center">
-			{'Copyright © '}
-		<Link color="inherit" href="https://material-ui.com/">
-		  	MedInfo
+			{'Trademark '}
+		<Link color="inherit" href={parentURL} to={parentURL}>
+		  	FastMedInfo
 		</Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}
@@ -54,13 +56,26 @@ export default function SignIn() {
 	const [ loginSuccess, setLogin ] = useState(false);
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
+	const [retypeInfo, setRetypeInfo] = useState(false)
+	const [anchorEl, setAnchorEl] = React.useState(null)
+	let {hash} = useParams()
+
+	const handleClose = () => {
+		setAnchorEl(null);
+		setRetypeInfo(false)
+	  };
 
 	const userInfo = useSelector(state => state.userInfoReducer);
 	const dispatch = useDispatch();
 
 	const handleLogin = (event) => {
 		event.preventDefault()
-
+		let url = 'http://localhost:6000/users/login'
+		
+		if(hash !== undefined){
+			url = `http://localhost:6000/users/login/confirmation/${hash}`
+		}
+		console.log(hash)
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json',
@@ -69,9 +84,11 @@ export default function SignIn() {
               email: email,
               password: password
             })
-        }
-
-        fetch(`http://localhost:6000/users/login`, requestOptions)
+		}
+		
+		// Ensure email is a valid email upon sending POST request
+		if(validator.validate(email)){
+			fetch(url, requestOptions)
             .then(async response => {
                 const data = await response.json();
 
@@ -80,20 +97,32 @@ export default function SignIn() {
                     return Promise.reject(error);
                 }
                 if(data.successStatus){
-					
+					let userName = data.name.split(' ');
+					userName[0] = userName[0].charAt(0).toUpperCase() + userName[0].slice(1)
+					userName[1] = userName[1].charAt(0).toUpperCase() + userName[1].slice(1)
+					userName = userName.join(' ')
+
 					const userAuth = {
 						userId: data.userId,
+						uuId: data.uuId,
 						bearerToken: data.bearerToken,
+						name: userName,
 						isLoggedIn: true
 					}
 					dispatch(loginUser(userAuth))
 					console.log(userInfo)
-					setTimeout(() => window.location.href='/user-info', 200);
+					setTimeout(() => window.location.href='/user-info', 200)
+					setRetypeInfo(false)
 				} 
             })
             .catch(error => {
-                console.log(error)
+				console.log(error)
+				setRetypeInfo(true)
             });
+		}else {
+			console.log("Not a valid email")
+			setRetypeInfo(true)
+		}
 	}
 
   	return (
@@ -131,10 +160,21 @@ export default function SignIn() {
 				onChange={e => setPassword(e.target.value)}
 				autoComplete="current-password"
 			/>
-			<FormControlLabel
-				control={<Checkbox value="remember" color="primary" />}
-				label="Remember me"
-			/>
+			<Popover
+				open={retypeInfo}
+				anchorEl={anchorEl}
+				onClose={handleClose}
+				anchorOrigin={{
+				vertical: 'bottom',
+				horizontal: 'center',
+				}}
+				transformOrigin={{
+				vertical: 'top',
+				horizontal: 'center',
+				}}
+			>
+				<Typography variant="h6" >Some information is missing or invalid.</Typography>
+			</Popover>
 			<Button
 				type="submit"
 				fullWidth
@@ -143,16 +183,16 @@ export default function SignIn() {
 				className={classes.submit}
 				onClick={handleLogin}
 			>
-				{loginSuccess ? 'Sign In Again' : 'Sign In'}
+				{'Sign In'}
 			</Button>
 			<Grid container>
 				<Grid item xs>
-				<Link href="#" variant="body2">
+				<Link href="/forgot-password" to="/forgot-password"  variant="body2">
 					Forgot password?
 				</Link>
 				</Grid>
 				<Grid item>
-				<Link href="#" variant="body2">
+				<Link href="/users" to="/users" variant="body2">
 					{"Don't have an account? Sign Up"}
 				</Link>
 				</Grid>

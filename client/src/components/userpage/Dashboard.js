@@ -10,36 +10,32 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems } from './listItems';
+import { profileLink, medInfoLink, homePageLink } from './listItems';
 import {useDispatch} from 'react-redux'
 import {logoutUser} from '../../cache/actions';
-import MedInfoItem from '../medical/MedInfoItem'
-import AddMedDataByModal from '../medical/AddMedDataByModal'
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Profile from './Profile'
+import MedInfoDashboard from './MedInfoDashboard';
+
+const parentURL = '/';
 
 function Copyright() {
 	return (
 		<Typography variant="body2" color="textSecondary" align="center">
-			{'Copyright © '}
-			<Link color="inherit" href="https://material-ui.com/">
-			MedInfo
-			</Link>{' '}
+			{'Trademark '}
+		<Link color="inherit" href={parentURL} to={parentURL}>
+		  	FastMedInfo
+		</Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}
-		</Typography>
+	  	</Typography>
 	);
 }
   
@@ -127,6 +123,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const [profile, setProfile] = useState(false);
   const dispatch = useDispatch();
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -134,8 +131,17 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  
+  let urlPath = window.location.href.split('/');
+  console.log("url: ", urlPath)
+  useEffect(() => {
+	if(urlPath[4] === 'profile'){
+		setProfile(true);
+	}else {
+		setProfile(false)  
+	}
+  }, [urlPath])
+  
   return (
     <div className={classes.root}>
 		<CssBaseline />
@@ -151,13 +157,9 @@ export default function Dashboard() {
 				<MenuIcon />
 			</IconButton>
 			<Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-				MedInfo - Dashboard
+				Fast MedInfo - Dashboard
 			</Typography>
-			<IconButton color="inherit">
-				<Badge badgeContent={4} color="secondary">
-				<NotificationsIcon />
-				</Badge>
-			</IconButton>
+			
 			</Toolbar>
 		</AppBar>
 		<Drawer
@@ -168,52 +170,29 @@ export default function Dashboard() {
 			open={open}
 		>
 			<div className={classes.toolbarIcon}>
-			<IconButton onClick={logoutUser()}>
+			<IconButton onClick={handleDrawerClose}>
 				<ChevronLeftIcon />
 			</IconButton>
 			</div>
 			<Divider />
 			<List>
-				<Link onClick={() => dispatch(logoutUser())} href='/'>
+				{homePageLink}
+				{!profile ? profileLink : medInfoLink}
+				<Link  color="inherit" style={{ textDecoration: 'none' }} onClick={() => dispatch(logoutUser())} href='/'>
 					<ListItem button>
 						<ListItemIcon>
 							<ExitToAppIcon />
 						</ListItemIcon>
-						<ListItemText primary="log out"/>
+						<ListItemText primary="Sign Out"/>
 					</ListItem>
 				</Link>
-				{mainListItems}
 			</List>
 		</Drawer>
 		<main className={classes.content}>
 			<div className={classes.appBarSpacer} />
 			<Container maxWidth="lg" className={classes.container}>
 			{/* This contains the buttons that will launch a modal to add each med info item data */}
-			<Grid container spacing={3}>
-				<Grid item xs={3}>
-					<Paper className={Paper}>
-						<AddMedDataByModal item={'Allergies'}/>
-						<AddMedDataByModal item={'Doctor Visits'} />
-						<AddMedDataByModal item={'Chronic Health Issues'} />
-						<AddMedDataByModal item={'Drug Prescriptions'} />
-						<AddMedDataByModal item={'Hospital Visits'} />
-						<AddMedDataByModal item={'Immunization Records'} />
-						<AddMedDataByModal item={'Lab Reports'} />
-					</Paper>
-				</Grid>
-				{/* Contains all drop down boxes for Med info items that are tracked per user */}
-				<Grid item xs={9}>
-					<Paper className={Paper}>
-						<MedInfoItem panel={'Allergies'} />
-						<MedInfoItem panel={'Doctor Visits'} />
-						<MedInfoItem panel={'Chronic Health Issues'} />
-						<MedInfoItem panel={'Drug Prescriptions'} />
-						<MedInfoItem panel={'Hospital Visits'} />
-						<MedInfoItem panel={'Immunization Records'} />
-						<MedInfoItem panel={'Lab Reports'} />
-					</Paper>
-				</Grid>
-				</Grid>
+			{profile ? <Profile /> : <MedInfoDashboard config="user"/>}
 			<Box pt={4}>
 				<Copyright />
 			</Box>

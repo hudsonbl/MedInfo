@@ -1,4 +1,4 @@
-import React , {useState, useEffect } from 'react' 
+import React , { useState } from 'react' 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -32,14 +32,18 @@ const useStyles = makeStyles((theme) => ({
 
 const AddMedDataByModal = (props) => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
   
     const handleOpen = () => {
-      setOpen(true);
+        if(props.config === 'user'){
+            setOpen(true);
+        }
     };
   
     const handleClose = () => {
       setOpen(false);
+      // props.refresh calls a homebrewed function to force a re-render to show newly added item in list
+      props.refresh() 
     };
   
     return (
@@ -48,7 +52,7 @@ const AddMedDataByModal = (props) => {
               <IconButton color="primary" aria-label="add" onClick={handleOpen}>
                   <Add />
               </IconButton>
-              <Typography>{props.item}</Typography>
+              <Typography>Add New</Typography>
           </div>
           <Modal
               aria-labelledby="transition-modal-title"
@@ -79,25 +83,25 @@ function selectInfoItem(props, callback){
     switch (props.item) {
         case 'Allergies':
             console.log("Button: ", props.item);
-            return (<AllergyModal handleClose={callback} item={props.item} />);
+            return (<AllergyModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Doctor Visits':
             console.log("Button: ", props.item);
-            return (<DoctorVisitModal handleClose={callback} item={props.item} />);
+            return (<DoctorVisitModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Chronic Health Issues':
             console.log("Button: ", props.item);
-            return (<ChronicHealthModal handleClose={callback} item={props.item} />);
+            return (<ChronicHealthModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Drug Prescriptions':
             console.log("Button: ", props.item);
-            return (<DrugPrescriptionModal handleClose={callback} item={props.item} />);
+            return (<DrugPrescriptionModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Hospital Visits':
             console.log("Button: ", props.item);
-            return (<HospitalVisitModal handleClose={callback} item={props.item} />);
+            return (<HospitalVisitModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Immunization Records':
             console.log("Button: ", props.item);
-            return (<ImmunizationRecordModal handleClose={callback} item={props.item} />);
+            return (<ImmunizationRecordModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         case 'Lab Reports':
             console.log("Button: ", props.item);
-            return (<LabReportModal handleClose={callback} item={props.item} />);
+            return (<LabReportModal dataType={'NEW_DATA'} handleClose={callback} item={props.item} />);
         default:
             console.log("error");
     }

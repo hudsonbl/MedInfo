@@ -8,7 +8,6 @@ import {
     Table,
     Paper
 } from '@material-ui/core';
-import axios from 'axios'
 import { initLab } from '../../cache/actions';
 import {useDispatch, useSelector} from 'react-redux'
 import LabReportRow from './LabReportRow'

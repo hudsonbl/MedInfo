@@ -1,10 +1,24 @@
 --
+-- Table structure for table `unverified users`
+--
+DROP TABLE IF EXISTS `unverifiedusers`;
+CREATE TABLE `unverifiedusers`( 
+  `userId` MEDIUMINT(4) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`( 
   `userId` MEDIUMINT(4) NOT NULL AUTO_INCREMENT,
+  `uuId` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
@@ -17,10 +31,10 @@ CREATE TABLE `users`(
 --
 
 LOCK TABLES `users` WRITE;
-INSERT INTO `users` (`name`, `email`, `password`) VALUES
-  ('Mike Tyson','tigerface@boxing.com','$2a$10$V2ur5B37Gk1gBHBuvUO6Nu.ZWB9B4jNB8E3EBFCo2G7FqGSroOtaW'),
-  ('Captain Kurk','kurk@starfleet.com','$2a$10$V2ur5B37Gk1gBHBuvUO6Nu.ZWB9B4jNB8E3EBFCo2G7FqGSroOtaW'),
-  ('Tiger Woods','twoods@pga.com','$2a$10$V2ur5B37Gk1gBHBuvUO6Nu.ZWB9B4jNB8E3EBFCo2G7FqGSroOtaW')
+INSERT INTO `users` (`uuId`, `name`, `email`, `password`) VALUES
+  ('46c66d18-fb72-4208-b57b-87e985773030', 'Mike Tyson','tigerface@boxing.com','$2a$10$V2ur5B37Gk1gBHBuvUO6Nu.ZWB9B4jNB8E3EBFCo2G7FqGSroOtaW'),
+  ('0def916f-aff5-4f5b-a501-2aa8ee8a7e3d', 'Captain Kurk','kurk@starfleet.com','$2a$10$V2ur5B37Gk1gBHBuvUO6Nu.ZWB9B4jNB8E3EBFCo2G7FqGSroOtaW'),
+  ('9b455877-95db-4972-8d46-0bc0718a48e6','Tiger Woods','twoods@pga.com','$2a$10$V2ur5B37Gk1gBHBuvUO6Nu.ZWB9B4jNB8E3EBFCo2G7FqGSroOtaW')
   ;
 UNLOCK TABLES;
 
@@ -119,7 +133,6 @@ INSERT INTO `allergies` (`userId`, `allergy`, `symptoms`, `medication`) VALUES
   ('3', 'Epinephrin', 'Severe swelling and will require a epipen','Allegra'),
   ('3', 'Honey Bees', 'Swelling around the throat','Xyzal'),
   ('3', 'Flowers', 'Itchyness and rash formation','Alavert'),
-  ('3', 'Peanut', 'Hives formation and swelling around the throat, severe action must be taken','Micro dosing honey'),
   ('3', 'Gluten', 'Severe diahrea after consumption','Claritin')
   ;
 UNLOCK TABLES;

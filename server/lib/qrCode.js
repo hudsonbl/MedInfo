@@ -2,10 +2,13 @@
  * Creates QR codes for users. 
  */
 const qrcode = require('qrcode');
-
-function generateQRCode(userId) {
+const UUID_LEN = 36;
+// Creates a qr image when a new user is created. Function returns filepath for image
+async function generateQRCode(conjugatedId) {
+    
+    const userId = conjugatedId.slice(UUID_LEN, conjugatedId.length);
     const filepath = `./files/qrcodes/user${userId}.png`;
-    const url = `http://192.168.1.12:3000/first-responder/${userId}`;
+    const url = `http://192.168.1.12:3000/first-responder/${conjugatedId}`;
     qrcode.toFile(filepath, url, {
         color: {
 			dark: '#000',

@@ -5,7 +5,8 @@ const labReportData = (state = [], action) => {
         case 'LAB_DATA_INIT':
             return state = action.payload;
         case 'LAB_DATA_ADD':
-            return state.push(action.payload);
+            state.push(action.data);
+            return state;
         default:
             return state
     }

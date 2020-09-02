@@ -155,10 +155,10 @@ router.patch('/:id', requireAuthentication, async (req, res) => {
 // ======  DELETE immunization record ======
 // =========================================
 
-router.delete('/:userId/:recordId', requireAuthentication, async (req, res) => {
+router.delete('/:id/:recordId', requireAuthentication, async (req, res) => {
     // Get the user and report id from uri
     const ids = {
-        userId: parseInt(req.params.userId),
+        userId: parseInt(req.params.id),
         recordId: parseInt(req.params.recordId)
     };
     // TODO: Check user authentication 

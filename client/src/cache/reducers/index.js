@@ -6,8 +6,9 @@ import hospitalVisitData from './hospitalVisitData';
 import immunizationData from './immunizationData';
 import labReportData from './labReportData';
 import userInfo from './userInfo';
-
+import initFlags from './initFlags';
 import {combineReducers} from 'redux';
+import profileData from './profileData';
 
 const allReducers = combineReducers({
     allergyReducer: allergyData,
@@ -17,7 +18,9 @@ const allReducers = combineReducers({
     hospitalReducer: hospitalVisitData,
     immunizationReducer: immunizationData,
     labReportReducer: labReportData,
-    userInfoReducer: userInfo
+    userInfoReducer: userInfo,
+    userProfileReducer: profileData,
+    initFlagsReducer: initFlags
 });
 
 const rootReducer = (state, action) => {

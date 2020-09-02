@@ -155,10 +155,10 @@ router.patch('/:id', requireAuthentication, async (req, res) => {
 // =======  DELETE drug prescription =======
 // =========================================
 
-router.delete('/:userId/:prescriptionId', requireAuthentication, async (req, res) => {
+router.delete('/:id/:prescriptionId', requireAuthentication, async (req, res) => {
     // Get the user and visit id from uri
     const ids = {
-        userId: parseInt(req.params.userId),
+        userId: parseInt(req.params.id),
         prescriptionId: parseInt(req.params.prescriptionId)
     };
     // TODO: Check user authentication 

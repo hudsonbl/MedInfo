@@ -112,7 +112,7 @@ router.patch('/:id', requireAuthentication, async (req, res) => {
     // Get user id and extract request body
     req.body.userId = parseInt(req.params.id);
     const body = extractValidFields(req.body, DoctorVisitPatchSchema);
-    
+
     // Check if request body is valid
     if(validateAgainstSchema(body, DoctorVisitPatchSchema)) {
         // Validate authenticated user
@@ -155,10 +155,10 @@ router.patch('/:id', requireAuthentication, async (req, res) => {
 // =========  DELETE doctor visit ==========
 // =========================================
 
-router.delete('/:userId/:visitId', requireAuthentication, async (req, res) => {
+router.delete('/:id/:visitId', requireAuthentication, async (req, res) => {
     // Get the user and visit id from uri
     const ids = {
-        userId: parseInt(req.params.userId),
+        userId: parseInt(req.params.id),
         visitId: parseInt(req.params.visitId)
     };
     // TODO: Check user authentication 
