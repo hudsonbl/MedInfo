@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link'
 import Typography from '@material-ui/core/Typography'
 import img1 from './photos/Capture.JPG'
 import img2 from './photos/work1.jpg'

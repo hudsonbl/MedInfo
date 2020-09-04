@@ -11,9 +11,7 @@ async function sendVerificationEmail(body) {
     console.log("Encrypt Len: ", encryption);
     let newencryption = encryptHash(encryption)
     console.log("Encrypt Len: ", newencryption);
-    const url = `http://localhost:3000/login/confirmation/${newencryption}`;
-    // FOR TESTING PURPOSES 
-    return newencryption;
+    const url = `http://fastmedinfo.com/login/confirmation/${newencryption}`;
     
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({

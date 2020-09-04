@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 // Component: Creates the dropdown table for Chronic Health Issues
 const ChronicHealthList = (props) => {
-    const [ querySuccess, checkQuery ] = useState(false);
+    // const [ querySuccess, checkQuery ] = useState(false);
     const initFlags = useSelector(state => state.initFlagsReducer);
     const userInfo = useSelector(state => state.userInfoReducer);
     const chronicDataRed = useSelector(state => state.chronicReducer);

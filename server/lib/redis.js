@@ -1,12 +1,7 @@
 /* Contains the redis config and processing */
-  
-const express = require('express');
 const redis = require('redis');
-
-const app = express();
-const port = process.env.PORT || 8000;
-//const redisHost = process.env.REDIS_HOST || '127.0.0.1';
-const redisHost = process.env.REDIS_HOST || 'localhost';
+const redisHost = process.env.REDIS_HOST || '127.0.0.1';
+//const redisHost = process.env.REDIS_HOST || 'localhost';
 const redisPort = process.env.REDIS_PORT || '6379';
 
 const redisClient = redis.createClient(redisPort, redisHost);

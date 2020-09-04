@@ -56,12 +56,10 @@ const SignUp = () => {
 	const [lastName, setLastName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
-	const [isResend, setResend] = useState(false);
 	const [retypeInfo, setRetypeInfo] = useState(false)
 	const [anchorEl, setAnchorEl] = React.useState(null)
 
 	const resendVerificationEmail = (event) => {
-		setResend(true)
 		registerAccount(event)
 	}
 

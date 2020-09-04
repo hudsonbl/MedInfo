@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AllergyList = (props) => { 
-    const [ querySuccess, checkQuery ] = useState(false);
+    // const [ querySuccess, checkQuery ] = useState(false);
     const userInfo = useSelector(state => state.userInfoReducer);
     const allergyDataRed = useSelector(state => state.allergyReducer);
     const initFlags = useSelector(state => state.initFlagsReducer);

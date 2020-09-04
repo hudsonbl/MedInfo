@@ -1,6 +1,7 @@
+import React from 'react'
 // This file is responsible for sending server requests to add new data or edit a data piece for the modals.
 
-function sendNewData(body, url, props, dispatch, userInfo, addDataCallback) {
+export function sendNewData(body, url, props, dispatch, userInfo, addDataCallback) {
 
     const requestOptions = {
         method: 'POST',
@@ -31,9 +32,8 @@ function sendNewData(body, url, props, dispatch, userInfo, addDataCallback) {
             console.log(error);
         });    
 }  
-exports.sendNewData = sendNewData;
 
-const sendEdit = (body, url, props, dispatch, userInfo, editDataCallback) => {
+export const sendEdit = (body, url, props, dispatch, userInfo, editDataCallback) => {
     console.log("EDIT: +++++++ > : ", body);
     const requestOptions = {
         method: 'PATCH',
@@ -63,9 +63,8 @@ const sendEdit = (body, url, props, dispatch, userInfo, editDataCallback) => {
             console.log(error)
         });  
 }
-exports.sendEdit = sendEdit;
 
-const sendDelete = (itemId, url, dispatch, userInfo, deleteDataCallback) => {
+export const sendDelete = (itemId, url, dispatch, userInfo, deleteDataCallback) => {
 
     const requestOptions = {
         method: 'DELETE',
@@ -93,9 +92,8 @@ const sendDelete = (itemId, url, dispatch, userInfo, deleteDataCallback) => {
             console.log(error)
         });  
 }
-exports.sendDelete = sendDelete;
 
-const sendGET = (url, dispatch, userInfo, initData, initFlag, setData) => {
+export const sendGET = (url, dispatch, userInfo, initData, initFlag, setData) => {
     const requestOptions = {
         method: 'GET',
         headers: { 
@@ -128,4 +126,3 @@ const sendGET = (url, dispatch, userInfo, initData, initFlag, setData) => {
             console.log(error)
         });  
 }
-exports.sendGET = sendGET;

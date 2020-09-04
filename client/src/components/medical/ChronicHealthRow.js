@@ -8,8 +8,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteChronic } from '../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
-import { sendDelete } from './modals/modal-api/ModalServerRequest'
-import {chronicURL} from '../../config/configValues';
+import { sendDelete } from './modals/modal-api/ModalServerRequest.js'
+import { chronicURL } from '../../config/configValues';
 
 function ChronicHealthRow(props) {
     const dispatch = useDispatch()

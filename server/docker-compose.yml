@@ -1,11 +1,78 @@
+version: '3.7'
+services: 
+    mysql-medinfo:
+        image: mysql:latest
+        restart: always
+        container_name: mysql-medinfo-server
+        env_file: .env
+        ports:
+            - 3306:3306
+        volumes:
+            - mysql-medinfo:/var/lib/mysql
+            - ./db-init/:/docker-entrypoint-initdb.d
+        environment: 
+            MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        networks: 
+            - mysql-net
+
+    redis:
+        hostname: redis
+        image: redis:latest
+        restart: always
+        networks: 
+            - redis-net
+        
+    server-api:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        image: nodejs
+        container_name: fast-medinfo
+        restart: unless-stopped
+        env_file:
+            - .env
+        ports: 
+            - 6000:6000
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_HOST: mysql-medinfo-server
+            REDIS_HOST: ${REDIS_HOST}
+            REDIS_PORT: ${REDIS_PORT}
+            SECRET_KEY: ${SECRET_KEY}
+            GMAIL_PASS: ${GMAIL_PASS}
+            GMAIL_USER: ${GMAIL_USER}
+        volumes:
+            - .:/home/node/app
+            - node_modules:/home/node/app/node_modules
+        networks: 
+            - redis-net 
+            - mysql-net
+
+networks:
+    redis-net:
+        driver: bridge
+    mysql-net:
+        driver: bridge
+
+volumes: 
+    mysql-medinfo:
+        name: mysql-medinfo-data 
+    node_modules:
+# Use this for local host development
+# Also under /lib/mysqlPool change host to localhost instead of 127.0.0.1 and port to 3333
+# Under /lib/redis change host to localhost instead of 127.0.0.1
 #version: '3.7'
 #services: 
 #    mysql-medinfo:
 #        image: mysql:latest
 #        restart: always
 #        container_name: mysql-medinfo-server
-#        env_file: .env
-#        ports:
+#        ports: 
 #            - 3306:3306
 #        volumes:
 #            - mysql-medinfo:/var/lib/mysql
@@ -15,8 +82,6 @@
 #            MYSQL_DATABASE: ${MYSQL_DATABASE}
 #            MYSQL_USER: ${MYSQL_USER}
 #            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-#        networks: 
-#            - mysql-net
 #
 #    redis:
 #        hostname: redis
@@ -24,13 +89,13 @@
 #        restart: always
 #        networks: 
 #            - redis-net
-#        
+#
 #    server-api:
 #        build: 
 #            context: .
 #            dockerfile: Dockerfile
 #        image: nodejs
-#        container_name: fast-medinfo
+#        container_name: fast-medinfo-server
 #        restart: unless-stopped
 #        env_file:
 #            - .env
@@ -40,62 +105,26 @@
 #            MYSQL_DATABASE: ${MYSQL_DATABASE}
 #            MYSQL_USER: ${MYSQL_USER}
 #            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-#            MYSQL_HOST: mysql-medinfo-server
+#            MYSQL_HOST: 'localhost'
 #            REDIS_HOST: ${REDIS_HOST}
 #            REDIS_PORT: ${REDIS_PORT}
 #            SECRET_KEY: ${SECRET_KEY}
 #            GMAIL_PASS: ${GMAIL_PASS}
 #            GMAIL_USER: ${GMAIL_USER}
 #        volumes:
-#            - .:/home/node/app
-#            - node_modules:/home/node/app/node_modules
+#            - .:/home/node/server
+#            - node_modules:/home/node/server/node_modules
 #        networks: 
 #            - redis-net 
 #            - mysql-net
-#
 #networks:
 #    redis-net:
 #        driver: bridge
 #    mysql-net:
 #        driver: bridge
-#
 #volumes: 
 #    mysql-medinfo:
 #        name: mysql-medinfo-data 
+#    redis_data:
+#        driver: local
 #    node_modules:
-
-# Use this for local host development
-# Also under /lib/mysqlPool change host to localhost instead of 127.0.0.1 and port to 3333
-# Under /lib/redis change host to localhost instead of 127.0.0.1
-version: '3.7'
-services: 
-    mysql-medinfo:
-        image: mysql:latest
-        restart: always
-        container_name: mysql-medinfo-server
-        ports: 
-            - 3333:3306
-        volumes:
-            - mysql-medinfo:/var/lib/mysql
-            - ./db-init/:/docker-entrypoint-initdb.d
-        environment: 
-            MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-
-    redis:
-        image: redis:alpine
-        environment: 
-            # ALLOW_EMPTY_PASSWORD only recommended for development
-            - ALLOW_EMPTY_PASSWORD=yes
-            - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
-        ports:
-            - '6379:6379'
-        volumes: 
-            - 'redis_data:/bitnami/redis/data'
-volumes: 
-    mysql-medinfo:
-        name: mysql-medinfo-data 
-    redis_data:
-        driver: local

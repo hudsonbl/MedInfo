@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteDrug } from '../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
-import { sendDelete } from './modals/modal-api/ModalServerRequest'
+import { sendDelete } from './modals/modal-api/ModalServerRequest.js'
 import {prescriptionURL} from '../../config/configValues';
 function DrugPrescriptionRow(props) {
     

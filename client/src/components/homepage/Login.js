@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
 	const classes = useStyles();
-	const [ loginSuccess, setLogin ] = useState(false);
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [retypeInfo, setRetypeInfo] = useState(false)

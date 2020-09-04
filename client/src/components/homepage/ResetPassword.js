@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux';
 import { resetPasswordURL } from '../../config/configValues';
 
 const parentURL = '/';
@@ -54,9 +53,6 @@ export default function ResetPassword() {
 	const [ password, setPassword ] = useState('');
 	const [ reenterPassword, setReenterPassword] = useState('');
 	const [ code, setCode ] = useState('');
-
-	const userInfo = useSelector(state => state.userInfoReducer);
-	const dispatch = useDispatch();
 
 	const handleResetPassword = (event) => {
 		event.preventDefault()

@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteAllergy } from '../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
-import { sendDelete } from './modals/modal-api/ModalServerRequest'
+import { sendDelete } from './modals/modal-api/ModalServerRequest.js'
 import {allergyURL} from '../../config/configValues';
 
 function AllergyRow(props) {

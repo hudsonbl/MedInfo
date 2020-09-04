@@ -58,7 +58,7 @@ router.post('/', async(req, res) => {
             debug("--Unverified user created successfully");
             res.status(201).send({
                 success: "User was created successfully",
-               successStatus: true
+                successStatus: true
             });
         } catch (err) {
             // Todo: Need to look into sending error messages that may intrusive and reveal

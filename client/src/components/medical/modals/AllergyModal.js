@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button'
-import { addAllergy, editAllergy, deleteAllergy } from '../../../cache/actions';
+import { addAllergy, editAllergy } from '../../../cache/actions';
 import { useDispatch, useSelector } from 'react-redux'
 import { sendEdit, sendNewData } from './modal-api/ModalServerRequest';
 import {allergyURL} from '../../../config/configValues';

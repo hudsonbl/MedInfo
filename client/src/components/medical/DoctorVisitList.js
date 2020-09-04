@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 // Component: Creates the dropdown table for Doctor Visits
 const DoctorVisitList = (props) => {
-    const [ querySuccess, checkQuery ] = useState(false)
+    // const [ querySuccess, checkQuery ] = useState(false)
     const initFlags = useSelector(state => state.initFlagsReducer);
     const userInfo = useSelector(state => state.userInfoReducer)
     const doctorDataRed = useSelector(state => state.doctorReducer)

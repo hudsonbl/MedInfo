@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Dashboard from './components/userpage/Dashboard';
 import HomePage from './components/homepage/Dashboard';
@@ -7,18 +6,14 @@ import Login from './components/homepage/Login'
 import CreateUser from './components/homepage/CreateUser'
 import ForgotPassword from './components/homepage/ForgotPassword'
 import ResetPassword from './components/homepage/ResetPassword'
-import Profile from './components/userpage/Profile'
 import FirstResponder from './components/userpage/FirstResponder'
 import FourOhFour from './components/errorpage/FourOhFour'
 import About from './components/homepage/About'
 import WelcomScreen from './components/homepage/WelcomScreen';
 import {
-	Route,
-	NavLink,
+	Route,	
 	BrowserRouter as Router,
-	browserHistory,
 	Switch,
-	Redirect
 } from 'react-router-dom'
 
 const App = () => {
