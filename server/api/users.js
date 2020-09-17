@@ -190,7 +190,7 @@ router.post('/login', async(req, res) => {
         });
     }
 });
-module.exports = router;
+
 
 /*
     Resource: POST /users/forgot-password
@@ -290,3 +290,5 @@ router.get('/user-info/profile/:userId', async(req, res) => {
     }
     
 });
+
+module.exports = router;

@@ -58,9 +58,11 @@ export default function ResetPassword() {
 		event.preventDefault()
 
         const requestOptions = {
+			mode: 'cors',
             method: 'POST',
             headers: {'Content-Type': 'application/json',
-                      'accept': 'application/json'},
+                      'accept': 'application/json',
+					  'Access-Control-Allow-Origin': '*'},
             body: JSON.stringify({
 				code: code,
 				email: email,
