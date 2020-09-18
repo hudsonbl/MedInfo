@@ -32,7 +32,7 @@ services:
         container_name: fast-medinfo-server
         restart: unless-stopped
         ports: 
-            - 6000:6000
+            - 8000:8000
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_USER: ${MYSQL_USER}

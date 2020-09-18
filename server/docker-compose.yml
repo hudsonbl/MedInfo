@@ -35,7 +35,7 @@ services:
         env_file:
             - .env
         ports: 
-            - 6000:6000
+            - 8000:8000
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_USER: ${MYSQL_USER}
