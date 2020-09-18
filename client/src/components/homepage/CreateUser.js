@@ -73,11 +73,10 @@ const SignUp = () => {
 		
         // Request Body
         const requestOptions = {
-			mode: 'cors',
+			
             method: 'POST',
             headers: {'Content-Type': 'application/json',
-                      'accept': 'application/json',
-					  'Access-Control-Allow-Origin': '*'},
+                      'accept': 'application/json'},
             body: JSON.stringify({
               name: firstName + ' ' + lastName,
               email: email,

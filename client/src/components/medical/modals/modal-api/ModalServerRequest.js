@@ -4,12 +4,10 @@ import React from 'react'
 export function sendNewData(body, url, props, dispatch, userInfo, addDataCallback) {
 
     const requestOptions = {
-        mode: 'cors',
         method: 'POST',
         headers: {'Content-Type': 'application/json',
                   'Authorization': `Bearer ${userInfo.bearerToken}`,
-                  'accept': 'application/json',
-                  'Access-Control-Allow-Origin': '*'},
+                  'accept': 'application/json'},
         body: JSON.stringify(body)
     };
 
@@ -38,12 +36,10 @@ export function sendNewData(body, url, props, dispatch, userInfo, addDataCallbac
 export const sendEdit = (body, url, props, dispatch, userInfo, editDataCallback) => {
     console.log("EDIT: +++++++ > : ", body);
     const requestOptions = {
-        mode: 'cors',
         method: 'PATCH',
         headers: {'Content-Type': 'application/json',
                   'Authorization': `Bearer ${userInfo.bearerToken}`,
-                  'accept': 'application/json',
-                  'Access-Control-Allow-Origin': '*'},
+                  'accept': 'application/json'},
         body: JSON.stringify(body)
     };
     console.log("USER: ", userInfo)
@@ -71,12 +67,10 @@ export const sendEdit = (body, url, props, dispatch, userInfo, editDataCallback)
 export const sendDelete = (itemId, url, dispatch, userInfo, deleteDataCallback) => {
 
     const requestOptions = {
-        mode: 'cors',
         method: 'DELETE',
         headers: {'Content-Type': 'application/json',
                   'Authorization': `Bearer ${userInfo.bearerToken}`,
-                  'accept': 'application/json',
-                  'Access-Control-Allow-Origin': '*'},
+                  'accept': 'application/json'},
     };
     console.log("USER: ", userInfo)
     fetch(`${url}${userInfo.userId}/${itemId}`, requestOptions)
@@ -101,13 +95,11 @@ export const sendDelete = (itemId, url, dispatch, userInfo, deleteDataCallback) 
 
 export const sendGET = (url, dispatch, userInfo, initData, initFlag, setData) => {
     const requestOptions = {
-        mode: 'cors',
         method: 'GET',
         headers: { 
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${userInfo.bearerToken}`,
-            'accept': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'accept': 'application/json'
         }
     };
 

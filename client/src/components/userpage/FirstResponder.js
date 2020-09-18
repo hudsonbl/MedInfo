@@ -169,12 +169,10 @@ function AllergyTable(props) {
 	
     useEffect(() => {
 		const requestOptions = {
-			mode: 'cors',
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
-                'accept': 'application/json',
-				'Access-Control-Allow-Origin': '*'
+                'accept': 'application/json'
             }
         }
         

@@ -55,11 +55,9 @@ export default function ForgotPassword() {
 		event.preventDefault()
 
         const requestOptions = {
-			mode: 'cors',
             method: 'POST',
             headers: {'Content-Type': 'application/json',
-                      'accept': 'application/json',
-					  'Access-Control-Allow-Origin': '*'},
+                      'accept': 'application/json'},
             body: JSON.stringify({
               email: email
             })
