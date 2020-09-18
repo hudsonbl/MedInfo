@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const baseURL = 'http://127.0.0.1:6000/';
+export const baseURL = 'http://127.0.0.1:8000/';
 export const allergyURL = baseURL + 'allergies/';
 export const chronicURL = baseURL + 'chronic-health/';
 export const doctorURL = baseURL + 'doctor-visit/';

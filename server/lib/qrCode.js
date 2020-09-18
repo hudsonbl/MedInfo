@@ -8,7 +8,7 @@ async function generateQRCode(conjugatedId) {
     
     const userId = conjugatedId.slice(UUID_LEN, conjugatedId.length);
     const filepath = `./files/qrcodes/user${userId}.png`;
-    const url = `http://192.168.1.12:3000/first-responder/${conjugatedId}`;
+    const url = `fastmedinfo.com/first-responder/${conjugatedId}`;
     qrcode.toFile(filepath, url, {
         color: {
 			dark: '#000',

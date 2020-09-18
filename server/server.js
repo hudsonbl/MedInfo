@@ -5,7 +5,7 @@ const cors = require('cors');
 const {debug} = require('./lib/debug');
 const app = express();
 const {applyRateLimit} = require('./lib/redis');
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 8000;
 
 //app.use(metrics);
 app.use(cors());
